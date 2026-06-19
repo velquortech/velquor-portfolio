@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+#
+# Pre-push gate: mirrors the CI/CD pipeline (lint -> build) locally so failures
+# are caught before a push, not minutes later in GitHub Actions / Vercel.
+#
+# Skip in an emergency with:  git push --no-verify
+set -e
+
+echo "▶ pre-push: yarn lint"
+yarn lint
+
+echo "▶ pre-push: yarn build"
+yarn build
+
+echo "✓ pre-push checks passed — pushing"
