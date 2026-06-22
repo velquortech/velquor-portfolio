@@ -1,7 +1,10 @@
 export type GalleryItem = {
   caption: string;
-  /** Gradient background class used to fill the mockup frame. */
-  tint: string;
+  /** Gradient background class used to fill the mockup frame (fallback when no image). */
+  tint?: string;
+  /** Real image source; when present, rendered inside the frame instead of the tint. */
+  src?: string;
+  alt?: string;
 };
 
 export type Project = {
@@ -35,43 +38,54 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
-    slug: "meridian",
-    name: "Meridian",
-    category: "Fintech Platform",
-    desc: "Real-time trading dashboard for a payment processing company. Sub-100ms data refresh, multi-currency, GDPR-compliant.",
-    result: "40% faster trade execution",
-    tags: ["TypeScript", "React", "WebSocket", "Node.js", "PostgreSQL"],
-    headerClass: "bg-project-meridian",
-    imageUrl:
-      "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1280&q=80&auto=format&fit=crop",
-    imageAlt: "Financial trading charts on multiple screens",
+    slug: "hrmis",
+    name: "HRMIS",
+    category: "Government HR System",
+    desc: "A centralized Human Resource Management Information System for government offices — consolidating employee records, payroll, leave, and reporting into one source of truth.",
+    result: "Centralized HR across every office",
+    tags: ["TypeScript", "React", "Node.js", "PostgreSQL", "REST API"],
+    headerClass: "bg-project-hrmis",
+    imageUrl: "/images/projects-images/hrmis/hrmis-gif.gif",
+    imageAlt: "HRMIS dashboard walkthrough showing centralized HR records",
     featured: true,
     subtitle:
-      "Real-time trading platform engineered for speed, compliance, and global scale.",
-    client: "Meridian Pay",
-    industry: "Fintech & Payments",
+      "A centralized HR Management Information System built to unify employee data across government offices.",
+    client: "Public Sector HR Division",
+    industry: "Government & Public Sector",
     timeline: "7 months",
     services: [
       "Web Application Development",
-      "Real-Time Architecture",
+      "HR System Architecture",
       "UI/UX Design",
-      "Security & Compliance",
-      "Cloud Infrastructure",
+      "Data Centralization",
+      "Role-Based Access Control",
     ],
     challenge:
-      "Meridian Pay's traders were working off a legacy dashboard that lagged several seconds behind the market, settled in a single currency, and had no audit trail to satisfy European regulators. As volume grew across borders, the delays were costing real money on every trade and putting the company at compliance risk.",
+      "Across government offices, HR data lived in disconnected spreadsheets, paper files, and standalone systems that never spoke to one another. Employee records, payroll, leave balances, and service history were duplicated and inconsistent between departments — making information slow to retrieve, hard to audit, and nearly impossible to report on across the workforce as a whole.",
     solution:
-      "We rebuilt the platform around a WebSocket data layer that streams market changes in under 100 milliseconds, with multi-currency settlement and a tamper-proof audit log baked in from the start. A redesigned dashboard surfaces positions, exposure, and risk in a single glanceable view, while the underlying services scale horizontally to absorb spikes in trading activity.",
+      "We built HRMIS, a centralized Human Resource Management Information System that consolidates every office's HR data into a single, authoritative platform. Employee 201 files, payroll, leave, attendance, and reporting all live in one place, with role-based access so each office and HR officer sees exactly what they're permitted to. Standardized workflows replace manual paperwork, while consolidated dashboards give administrators a real-time view of the entire workforce.",
     results: [
-      "40% faster trade execution",
-      "Sub-100ms data refresh across all markets",
-      "GDPR & PCI-DSS compliant from launch",
-      "Zero-downtime multi-currency settlement",
+      "Centralized HR data across all government offices",
+      "Single source of truth for employee records",
+      "Role-based access control for every office and officer",
+      "Faster reporting with audit-ready records",
     ],
     gallery: [
-      { caption: "Live trading dashboard", tint: "bg-project-meridian" },
-      { caption: "Multi-currency settlement", tint: "bg-spotlight-violet" },
-      { caption: "Compliance & audit console", tint: "bg-project-meridian" },
+      {
+        caption: "Centralized HR dashboard",
+        src: "/images/projects-images/hrmis/hrmis-1.png",
+        alt: "HRMIS centralized dashboard view",
+      },
+      {
+        caption: "Employee records management",
+        src: "/images/projects-images/hrmis/hrmis-2.png",
+        alt: "HRMIS employee records management screen",
+      },
+      {
+        caption: "Reporting & administration",
+        src: "/images/projects-images/hrmis/hrmis-3.png",
+        alt: "HRMIS reporting and administration screen",
+      },
     ],
   },
   {

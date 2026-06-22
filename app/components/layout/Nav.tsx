@@ -6,10 +6,10 @@ import { ThemeToggle } from "../ThemeToggle";
 import { useTheme } from "../ThemeProvider";
 
 const LINKS = [
-  { label: "Services", href: "#services" },
-  { label: "Work",     href: "#work"     },
-  { label: "Process",  href: "#process"  },
-  { label: "Contact",  href: "#contact"  },
+  { label: "Services", href: "/#services" },
+  { label: "Work",     href: "/#work"     },
+  { label: "Process",  href: "/#process"  },
+  { label: "Contact",  href: "/#contact"  },
 ];
 
 function HamburgerIcon() {
@@ -49,7 +49,7 @@ export function Nav() {
       <div className="mx-auto flex items-center h-full px-6 max-w-[1200px]">
 
         {/* Logo */}
-        <a href="#" className="flex items-center no-underline mr-10 shrink-0" aria-label="Velquor home">
+        <a href="/" className="flex items-center no-underline mr-10 shrink-0" aria-label="Velquor home">
           <Image
             src={
               theme === "light"
@@ -83,7 +83,7 @@ export function Nav() {
 
           {/* Desktop CTA */}
           <a
-            href="#contact"
+            href="/#contact"
             className="hidden md:inline-flex items-center gap-1.5 bg-ink text-canvas px-[18px] py-2 rounded-pill text-[14px] font-semibold tracking-[-0.14px] no-underline"
           >
             Get in touch
@@ -120,7 +120,7 @@ export function Nav() {
             </a>
           ))}
           <a
-            href="#contact"
+            href="/#contact"
             onClick={() => setOpen(false)}
             className="inline-block mt-5 bg-ink text-canvas px-[22px] py-[10px] rounded-pill text-[14px] font-semibold no-underline"
           >

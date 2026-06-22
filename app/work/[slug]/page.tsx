@@ -86,7 +86,7 @@ export default async function ProjectPage({
               sizes="(min-width: 1200px) 1200px, 100vw"
               className="object-cover"
             />
-            <div aria-hidden className={`absolute inset-0 opacity-60 ${project.headerClass}`} />
+            <div aria-hidden className={`absolute inset-0 opacity-30 ${project.headerClass}`} />
           </div>
 
           {/* Project overview */}
@@ -139,8 +139,18 @@ export default async function ProjectPage({
                     <span className="w-2.5 h-2.5 rounded-full bg-hairline-md" />
                     <span className="w-2.5 h-2.5 rounded-full bg-hairline-md" />
                   </div>
-                  <div className={`relative h-[200px] ${item.tint}`}>
-                    <div aria-hidden className="absolute inset-0 bg-spotlight-texture" />
+                  <div className={`relative h-[200px] ${item.src ? "bg-s2" : item.tint}`}>
+                    {item.src ? (
+                      <Image
+                        src={item.src}
+                        alt={item.alt ?? item.caption}
+                        fill
+                        sizes="(min-width: 768px) 390px, 100vw"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div aria-hidden className="absolute inset-0 bg-spotlight-texture" />
+                    )}
                   </div>
                   <figcaption className="px-5 py-4 text-[13px] font-medium text-muted tracking-[-0.13px]">
                     {item.caption}
