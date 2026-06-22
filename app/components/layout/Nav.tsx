@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ThemeToggle } from "../ThemeToggle";
 import { useTheme } from "../ThemeProvider";
 
@@ -49,7 +50,7 @@ export function Nav() {
       <div className="mx-auto flex items-center h-full px-6 max-w-[1200px]">
 
         {/* Logo */}
-        <a href="/" className="flex items-center no-underline mr-10 shrink-0" aria-label="Velquor home">
+        <Link href="/" className="flex items-center no-underline mr-10 shrink-0" aria-label="Velquor home">
           <Image
             src={
               theme === "light"
@@ -62,7 +63,7 @@ export function Nav() {
             priority
             className="h-7 w-auto"
           />
-        </a>
+        </Link>
 
         {/* Desktop links */}
         <nav className="hidden md:flex flex-1 gap-8">
@@ -82,7 +83,7 @@ export function Nav() {
           <ThemeToggle />
 
           {/* Desktop CTA */}
-          <a
+          <Link
             href="/#contact"
             className="hidden md:inline-flex items-center gap-1.5 bg-ink text-canvas px-[18px] py-2 rounded-pill text-[14px] font-semibold tracking-[-0.14px] no-underline"
           >
@@ -90,7 +91,7 @@ export function Nav() {
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
               <path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-          </a>
+          </Link>
 
           {/* Mobile hamburger */}
           <button
@@ -119,13 +120,13 @@ export function Nav() {
               </svg>
             </a>
           ))}
-          <a
+          <Link
             href="/#contact"
             onClick={() => setOpen(false)}
             className="inline-block mt-5 bg-ink text-canvas px-[22px] py-[10px] rounded-pill text-[14px] font-semibold no-underline"
           >
             Get in touch →
-          </a>
+          </Link>
         </div>
       )}
     </header>

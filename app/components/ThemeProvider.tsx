@@ -19,6 +19,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       (window.matchMedia("(prefers-color-scheme: light)").matches
         ? "light"
         : "dark");
+    // One-time sync from localStorage after hydration; setState here is
+    // intentional to avoid an SSR/client theme mismatch.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme(resolved);
     document.documentElement.classList.toggle("light", resolved === "light");
   }, []);

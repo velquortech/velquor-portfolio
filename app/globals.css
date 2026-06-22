@@ -213,6 +213,7 @@ button:focus-visible {
   .bg-project-meridian { background: linear-gradient(135deg, #4c1d95 0%, #1e1b4b 50%, #0b0b0b 100%); }
   .bg-project-hrmis    { background: linear-gradient(135deg, #0e3a5f 0%, #0a1f33 50%, #0b0b0b 100%); }
   .bg-project-orbis    { background: linear-gradient(135deg, #0c4a6e 0%, #0f172a 50%, #0b0b0b 100%); }
+  .bg-project-nfa      { background: linear-gradient(135deg, #14532d 0%, #0a2417 50%, #0b0b0b 100%); }
   .bg-project-pulse    { background: linear-gradient(135deg, #7c2d12 0%, #1c0a03 50%, #0b0b0b 100%); }
   .bg-project-helix    { background: linear-gradient(135deg, #831843 0%, #1e0a14 50%, #0b0b0b 100%); }
 
