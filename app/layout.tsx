@@ -10,10 +10,75 @@ const inter = Inter({
   weight: ["400", "500", "600", "700"],
 });
 
+const SITE_URL = "https://velquor.com";
+const SITE_NAME = "Velquor";
+const SITE_DESCRIPTION =
+  "Velquor builds production-grade web platforms, mobile apps, and backend systems for ambitious companies. Engineered to scale from day one.";
+
 export const metadata: Metadata = {
-  title: "Velquor — Software Development Studio",
-  description:
-    "Velquor builds production-grade web platforms, mobile apps, and backend systems for ambitious companies. Engineered to scale from day one.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Velquor — Software Development Studio",
+    template: "%s — Velquor",
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: [
+    "Velquor",
+    "software development studio",
+    "web development",
+    "mobile app development",
+    "React",
+    "React Native",
+    "Next.js",
+    "backend systems",
+    "product engineering",
+    "Philippines software studio",
+  ],
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  alternates: {
+    canonical: "/",
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/images/velq-logo-white.png",
+  },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: "Velquor — Software Development Studio",
+    description: SITE_DESCRIPTION,
+    locale: "en_US",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Velquor — Software Development Studio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Velquor — Software Development Studio",
+    description: SITE_DESCRIPTION,
+    images: ["/images/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export default function RootLayout({

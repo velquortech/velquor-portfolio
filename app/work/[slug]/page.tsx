@@ -19,10 +19,24 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const project = getProject(slug);
-  if (!project) return { title: "Project not found — Velquor" };
+  if (!project) return { title: "Project not found" };
   return {
-    title: `${project.name} — Velquor`,
+    title: project.name,
     description: project.subtitle,
+    alternates: { canonical: `/work/${project.slug}` },
+    openGraph: {
+      type: "article",
+      url: `/work/${project.slug}`,
+      title: `${project.name} — Velquor`,
+      description: project.subtitle,
+      images: [{ url: project.imageUrl, alt: project.imageAlt }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.name} — Velquor`,
+      description: project.subtitle,
+      images: [project.imageUrl],
+    },
   };
 }
 
