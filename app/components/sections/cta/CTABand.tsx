@@ -1,7 +1,7 @@
 export function CTABand() {
   return (
     <section id="contact" className="px-6 py-6">
-      <div className="relative mx-auto max-w-[1200px] bg-spotlight-cta rounded-spotlight overflow-hidden px-[60px] py-20 flex flex-col items-start gap-8">
+      <div className="relative mx-auto max-w-[1200px] bg-spotlight-cta rounded-spotlight overflow-hidden px-6 sm:px-10 lg:px-[60px] py-16 sm:py-20 flex flex-col items-start gap-8">
         {/* Orb glow */}
         <div
           aria-hidden
@@ -195,7 +195,7 @@ export function CTABand() {
             </a>
             <a
               href="mailto:velquortechnologies@gmail.com"
-              className="bg-white/10 text-ink border border-white/15 px-[26px] py-[13px] rounded-pill text-[14px] font-medium tracking-[-0.14px] no-underline"
+              className="max-w-full break-all text-center bg-white/10 text-ink border border-white/15 px-[26px] py-[13px] rounded-pill text-[14px] font-medium tracking-[-0.14px] no-underline"
             >
               velquortechnologies@gmail.com
             </a>

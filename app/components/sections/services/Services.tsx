@@ -110,7 +110,7 @@ export function Services() {
         <div
           className="grid gap-3"
           style={{
-            gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(min(340px, 100%), 1fr))",
           }}
         >
           {SERVICES.map((s, i) =>

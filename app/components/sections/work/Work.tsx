@@ -179,7 +179,7 @@ export function Work() {
           <div
             className="grid gap-3"
             style={{
-              gridTemplateColumns: "repeat(auto-fill, minmax(480px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fill, minmax(min(480px, 100%), 1fr))",
             }}
           >
             {rest.map((p) => (

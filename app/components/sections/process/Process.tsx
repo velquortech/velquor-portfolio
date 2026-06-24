@@ -54,20 +54,22 @@ export function Process() {
           {STEPS.map((step) => (
             <div
               key={step.num}
-              className="group relative flex items-start gap-8 py-8 border-b border-hairline last:border-0 pl-4"
+              className="group relative flex flex-col gap-3 md:flex-row md:items-start md:gap-8 py-8 border-b border-hairline last:border-0 pl-4"
             >
               <div
                 aria-hidden
                 className="absolute left-0 top-4 bottom-4 w-[2px] rounded-full bg-gradient-to-b from-violet via-magenta to-orange opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
               />
 
-              <span className="shrink-0 w-10 text-[12px] font-semibold tracking-[0.08em] text-gradient-palette pt-[3px]">
-                {step.num}
-              </span>
+              <div className="flex items-baseline gap-4 md:contents">
+                <span className="shrink-0 w-10 text-[12px] font-semibold tracking-[0.08em] text-gradient-palette md:pt-[3px]">
+                  {step.num}
+                </span>
 
-              <h3 className="shrink-0 w-44 text-[20px] font-bold tracking-[-0.8px] leading-[1.2] text-ink transition-colors duration-200">
-                {step.title}
-              </h3>
+                <h3 className="shrink-0 md:w-44 text-[20px] font-bold tracking-[-0.8px] leading-[1.2] text-ink transition-colors duration-200">
+                  {step.title}
+                </h3>
+              </div>
 
               <p className="flex-1 text-[15px] leading-[1.6] tracking-[-0.15px] text-muted">
                 {step.desc}

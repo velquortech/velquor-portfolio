@@ -102,7 +102,7 @@ export function Testimonials() {
             ) => (
               <div
                 key={i}
-                className="group w-[380px] shrink-0 relative bg-s1 border border-hairline rounded-card overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-2 hover:border-hairline-hover cursor-default hover:[box-shadow:0_20px_60px_rgba(0,0,0,0.45),0_0_0_1px_var(--card-glow)]"
+                className="group w-[300px] sm:w-[340px] md:w-[380px] shrink-0 relative bg-s1 border border-hairline rounded-card overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-2 hover:border-hairline-hover cursor-default hover:[box-shadow:0_20px_60px_rgba(0,0,0,0.45),0_0_0_1px_var(--card-glow)]"
                 style={
                   {
                     "--card-glow": glowShadow.replace("0.15", "0.3"),
