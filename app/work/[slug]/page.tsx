@@ -6,6 +6,7 @@ import { Nav } from "../../components/layout/Nav";
 import { Footer } from "../../components/layout/Footer";
 import { CTABand } from "../../components/sections/cta/CTABand";
 import { PROJECTS, getProject } from "../../data/projects";
+import { LightboxProvider, ZoomTrigger } from "./Lightbox";
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
@@ -49,10 +50,18 @@ export default async function ProjectPage({
 
   const more = PROJECTS.filter((p) => p.slug !== project.slug).slice(0, 3);
 
+  const galleryCols =
+    project.gallery.length >= 3
+      ? "md:grid-cols-3"
+      : project.gallery.length === 2
+        ? "md:grid-cols-2"
+        : "md:grid-cols-1";
+
   return (
     <>
       <Nav />
       <main className="pt-28">
+       <LightboxProvider>
         <article className="mx-auto px-6 max-w-[1200px]">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-[13px] text-muted tracking-[-0.13px] mb-8">
@@ -87,6 +96,7 @@ export default async function ProjectPage({
               className="object-cover"
             />
             <div aria-hidden className={`absolute inset-0 opacity-30 ${project.headerClass}`} />
+            <ZoomTrigger src={project.imageUrl} alt={project.imageAlt} />
           </div>
 
           {/* Project overview */}
@@ -127,7 +137,7 @@ export default async function ProjectPage({
             <h2 className="text-display-md font-bold tracking-[-1px] text-ink mb-7">
               Project Gallery
             </h2>
-            <div className="grid gap-3 md:grid-cols-3">
+            <div className={`grid gap-3 ${galleryCols}`}>
               {project.gallery.map((item) => (
                 <figure
                   key={item.caption}
@@ -141,13 +151,20 @@ export default async function ProjectPage({
                   </div>
                   <div className={`relative h-[200px] ${item.src ? "bg-s2" : item.tint}`}>
                     {item.src ? (
-                      <Image
-                        src={item.src}
-                        alt={item.alt ?? item.caption}
-                        fill
-                        sizes="(min-width: 768px) 390px, 100vw"
-                        className="object-cover"
-                      />
+                      <>
+                        <Image
+                          src={item.src}
+                          alt={item.alt ?? item.caption}
+                          fill
+                          sizes="(min-width: 768px) 390px, 100vw"
+                          className="object-cover"
+                        />
+                        <ZoomTrigger
+                          src={item.src}
+                          alt={item.alt ?? item.caption}
+                          label={`View full image: ${item.caption}`}
+                        />
+                      </>
                     ) : (
                       <div aria-hidden className="absolute inset-0 bg-spotlight-texture" />
                     )}
@@ -234,6 +251,7 @@ export default async function ProjectPage({
             </div>
           </section>
         </article>
+       </LightboxProvider>
 
         <CTABand />
       </main>
