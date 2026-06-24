@@ -1,7 +1,26 @@
 "use client";
 
 import Image from "next/image";
+import { Facebook, Instagram, Linkedin } from "lucide-react";
 import { useTheme } from "../ThemeProvider";
+
+const SOCIALS = [
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/velquor",
+    Icon: Facebook,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/velquor",
+    Icon: Linkedin,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/velquor",
+    Icon: Instagram,
+  },
+];
 
 const COLS = [
   {
@@ -83,6 +102,22 @@ export function Footer() {
               Software development studio building production-grade systems for
               ambitious teams worldwide.
             </p>
+
+            {/* Social links */}
+            <div className="flex items-center gap-2.5 mt-5">
+              {SOCIALS.map(({ label, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-s1 border border-hairline text-muted hover:text-ink hover:border-hairline-hover transition-colors duration-200 no-underline"
+                >
+                  <Icon size={17} />
+                </a>
+              ))}
+            </div>
           </div>
 
           {COLS.map(({ title, links }) => (
