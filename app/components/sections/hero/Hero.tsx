@@ -1,9 +1,9 @@
 import { TechIllustration } from "./TechIllustration";
 
 const STATS = [
-  { value: "47+", label: "Systems shipped" },
-  { value: "5 yrs", label: "In production" },
-  { value: "30+", label: "Clients" },
+  { value: "20+", label: "Systems shipped" },
+  { value: "2 yrs", label: "In production" },
+  { value: "25+", label: "Clients" },
 ];
 
 export function Hero() {
@@ -42,7 +42,7 @@ export function Hero() {
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-2 bg-[rgba(124,58,237,0.10)] border border-[rgba(124,58,237,0.25)] rounded-pill px-[14px] py-[6px] text-[12px] font-medium tracking-[0.06em] text-[#a78bfa] uppercase mb-7 w-fit">
             <span className="w-[6px] h-[6px] rounded-full bg-success shrink-0" />
-            Software Development Studio · Est. 2019
+            Software Development Studio
           </div>
 
           {/* Headline */}

@@ -38,6 +38,104 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "tanimbes",
+    name: "Tanim, Bes!",
+    category: "AI Plant-Care Assistant",
+    desc: "A cross-platform mobile app that gives anyone an AI-powered plant-care assistant — chat with a friendly Taglish bot to diagnose, care for, and grow any plant.",
+    result: "An AI plant tito in your pocket",
+    tags: ["React Native", "Expo", "Botpress", "Supabase", "TypeScript"],
+    headerClass: "bg-project-tanimbes",
+    imageUrl: "/images/projects-images/tanimbes/tanimbes-1.jpg",
+    imageAlt: "Tanim, Bes! AI plant-care chat assistant app screen",
+    featured: true,
+    subtitle:
+      "A cross-platform app that puts an AI-powered, Taglish-speaking plant-care assistant in everyone's pocket — chat to diagnose, care for, and grow any plant.",
+    client: "Self-initiated consumer product",
+    industry: "AgriTech / Consumer Gardening & Lifestyle · AI Conversational Assistant",
+    timeline: "~3 months (January 2026 – March 2026)",
+    services: [
+      "Care tips for any plant — Taglish, multi-language assistant",
+      "Quick plant topics — one-tap prompts on Home",
+      "Read-aloud replies — expo-speech text-to-speech",
+      "Plant-care FAQ tab",
+      "24/7 always-on chat support",
+    ],
+    challenge:
+      "Plant-care advice online is fragmented, overly technical, and intimidating for beginners. New plant owners typically juggle scattered blog posts, forum threads, and generic search results — none of which give quick, personalized, conversational answers in a tone that feels approachable. The goal was to lower the barrier to successful home gardening with a single, friendly, always-available assistant that anyone could talk to like a knowledgeable friend, not read like a manual.",
+    solution:
+      "Tanim, Bes! puts an AI-powered plant-care assistant in everyone's pocket. Instead of browsing, users simply chat — in casual Taglish — to diagnose problems, get care routines, and grow any plant with confidence. The conversational assistant is a Botpress-backed chatbot integrated directly via REST (not a webview), with text-to-speech, markdown-formatted replies, and a warm Gen Z persona. A curated Home grid of plants and care actions preloads tailored prompts into the chat for one-tap guidance, while Supabase email/password auth keeps sessions persistent alongside a guest mode for instant, no-signup access. The whole experience wears a polished 'Emerald & Gold' theme with smooth animations — built once and delivered across Android, iOS, and Web from a single Expo codebase.",
+    results: [
+      "Friendly Taglish AI assistant available 24/7",
+      "Botpress chatbot integrated via REST with text-to-speech replies",
+      "One-tap plant topics and care actions on Home",
+      "Single Expo codebase shipping to Android, iOS, and Web",
+    ],
+    gallery: [
+      {
+        caption: "Taglish plant-care chat",
+        src: "/images/projects-images/tanimbes/tanimbes-1.jpg",
+        alt: "Tanim, Bes! conversational plant-care chat in Taglish",
+      },
+      {
+        caption: "Quick plant topics on Home",
+        src: "/images/projects-images/tanimbes/tanimbes-2.jpg",
+        alt: "Tanim, Bes! Home screen with quick plant topics and care actions",
+      },
+    ],
+  },
+  {
+    slug: "ridelink",
+    name: "RideLink",
+    category: "Peer-to-Peer Mobility Marketplace",
+    desc: "A two-sided mobile marketplace where anyone can rent or list cars, motorcycles, and heavy equipment — with verified identities, owner approvals, and live GPS tracking of active rentals.",
+    result: "3 years, 470+ commits, one codebase",
+    tags: ["React Native", "Expo", "TypeScript", "Supabase", "NativeWind"],
+    headerClass: "bg-project-ridelink",
+    imageUrl: "/images/projects-images/ridelink/ridelink-1.jpg",
+    imageAlt: "RideLink peer-to-peer vehicle rental app screens",
+    featured: true,
+    subtitle:
+      "A two-sided vehicle-rental marketplace where every user is both renter and owner — built on a fully serverless stack with live GPS tracking.",
+    client: "Self-initiated product",
+    industry: "Mobility & Peer-to-Peer Transportation Rental",
+    timeline:
+      "~3 years of iterative development (Jul 2023 – Jun 2026, 470+ commits), including a 2026 platform re-architecture and UI overhaul",
+    services: [
+      "Mobile App Development (iOS & Android)",
+      "Peer-to-Peer Marketplace Flows",
+      "Live GPS Rental Tracking",
+      "Serverless Backend & Security",
+      "Design System & UI Consolidation",
+    ],
+    challenge:
+      "Most vehicle-rental apps are one-directional — a fleet owner lists, a customer books. RideLink needed a true two-sided marketplace where any user is simultaneously a renter and an owner, across cars, motorcycles, and heavy equipment. That raised three hard problems at once: trust and safety, since peer-to-peer key handovers demand verified identities, owner approvals, admin moderation, and an authorization model that prevents data leaks; live accountability, since renters need confidence about a vehicle's location through continuous but battery-conscious GPS tracking; and a serverless backend with no custom API tier, which made the database itself the security boundary. Years of feature work had also left styling debt, mixed JS/TS, and ad-hoc components in need of a coherent design system.",
+    solution:
+      "We built a production-grade React Native app on Expo with a fully serverless Supabase backend — Postgres, Auth, and Storage with no custom server layer. Authorization is enforced at the database level so public anon keys never expose other users' data, with envelope encryption securing storage and keys held in device secure enclaves. A single user fluidly switches between renting and listing through multi-step registration, admin approval pipelines, and a full rental lifecycle (pending → approved → ongoing → completed). Battery-aware GPS tracking activates only during a rental — writing both live position and time-series trails to Postgres — then shuts off when idle. The whole app sits on a unified NativeWind design system of color, shadow, and typography tokens, reusable UI primitives, normalized data adapters, cached image rendering, and an incremental TypeScript migration.",
+    results: [
+      "Secure, single-codebase iOS/Android marketplace on a fully serverless stack",
+      "Dual-role flows let every user rent and list across cars, motorcycles, and heavy equipment",
+      "Database-level authorization with envelope encryption and secure-enclave keys",
+      "Battery-aware live GPS tracking active only during ongoing rentals",
+    ],
+    gallery: [
+      {
+        caption: "Browse & book vehicles",
+        src: "/images/projects-images/ridelink/ridelink-1.jpg",
+        alt: "RideLink vehicle browsing and booking screen",
+      },
+      {
+        caption: "Rental lifecycle management",
+        src: "/images/projects-images/ridelink/ridelink-2.jpg",
+        alt: "RideLink rental application and approval management screen",
+      },
+      {
+        caption: "Live GPS rental tracking",
+        src: "/images/projects-images/ridelink/ridelink-3.jpg",
+        alt: "RideLink live GPS tracking of an ongoing rental",
+      },
+    ],
+  },
+  {
     slug: "hrmis",
     name: "HRMIS",
     category: "Government HR System",
@@ -137,84 +235,6 @@ export const PROJECTS: Project[] = [
         src: "/images/projects-images/nfa-trading/trader-2-marketplace.png",
         alt: "NFA Trading trader-side marketplace and bidding view",
       },
-    ],
-  },
-  {
-    slug: "pulse",
-    name: "Pulse",
-    category: "Analytics SaaS",
-    desc: "Business intelligence platform processing over 1M events per minute. Multi-tenant, white-labeled, and self-serve.",
-    result: "1M+ events per minute",
-    tags: ["React", "Go", "Redis", "Kafka", "Kubernetes"],
-    headerClass: "bg-project-pulse",
-    imageUrl:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1280&q=80&auto=format&fit=crop",
-    imageAlt: "Data analytics dashboard with charts",
-    subtitle:
-      "Multi-tenant business intelligence platform built for massive event throughput.",
-    client: "Pulse Analytics",
-    industry: "Analytics SaaS",
-    timeline: "8 months",
-    services: [
-      "SaaS Development",
-      "Data Pipeline Engineering",
-      "UI/UX Design",
-      "Multi-Tenant Architecture",
-      "Cloud Infrastructure",
-    ],
-    challenge:
-      "Pulse wanted to sell business intelligence as a white-labeled, self-serve product, but their prototype buckled past a few thousand events per second and required hands-on setup for every new customer. Scaling the old architecture meant scaling the support team with it.",
-    solution:
-      "We engineered a Kafka-backed ingestion pipeline and Go services on Kubernetes that comfortably process over a million events per minute, with strict tenant isolation so each customer's data and branding stay separate. A guided onboarding flow lets new tenants stand themselves up in minutes without ever talking to support.",
-    results: [
-      "1M+ events processed per minute",
-      "White-labeled across 80+ customers",
-      "Self-serve onboarding in under 5 minutes",
-      "60% lower infrastructure cost per event",
-    ],
-    gallery: [
-      { caption: "Real-time analytics dashboard", tint: "bg-project-pulse" },
-      { caption: "Custom report builder", tint: "bg-spotlight-orange" },
-      { caption: "Tenant administration", tint: "bg-project-pulse" },
-    ],
-  },
-  {
-    slug: "helix",
-    name: "Helix",
-    category: "Healthcare Platform",
-    desc: "HIPAA-compliant patient management system for 50+ clinics. Offline-first mobile app with end-to-end encryption.",
-    result: "50+ clinics, HIPAA certified",
-    tags: ["React Native", "Express", "MongoDB", "AWS", "TypeScript"],
-    headerClass: "bg-project-helix",
-    imageUrl:
-      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1280&q=80&auto=format&fit=crop",
-    imageAlt: "Medical professional using tablet in clinic",
-    subtitle:
-      "HIPAA-compliant patient management system with an offline-first mobile experience.",
-    client: "Helix Health",
-    industry: "Healthcare",
-    timeline: "10 months",
-    services: [
-      "Mobile App Development",
-      "Web Application Development",
-      "Security & Compliance",
-      "Offline-First Architecture",
-      "UI/UX Design",
-    ],
-    challenge:
-      "Helix serves clinics in areas where connectivity is unreliable, yet clinicians still needed instant access to sensitive patient records. Existing tools either failed offline or stored data in ways that couldn't pass a HIPAA audit, forcing staff back to paper.",
-    solution:
-      "We built an offline-first mobile app with end-to-end encryption that keeps working with no signal and syncs safely the moment a connection returns, backed by an Express and MongoDB platform on AWS. Every record is encrypted at rest and in transit, and granular access controls give each role exactly the data it needs and nothing more.",
-    results: [
-      "50+ clinics onboarded",
-      "HIPAA certified end-to-end",
-      "Full functionality offline with zero data loss",
-      "45% faster patient intake",
-    ],
-    gallery: [
-      { caption: "Clinician dashboard", tint: "bg-project-helix" },
-      { caption: "Encrypted patient records", tint: "bg-spotlight-violet" },
-      { caption: "Offline-first mobile app", tint: "bg-project-helix" },
     ],
   },
 ];

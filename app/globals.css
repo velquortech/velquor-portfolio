@@ -216,6 +216,8 @@ button:focus-visible {
   .bg-project-nfa      { background: linear-gradient(135deg, #14532d 0%, #0a2417 50%, #0b0b0b 100%); }
   .bg-project-pulse    { background: linear-gradient(135deg, #7c2d12 0%, #1c0a03 50%, #0b0b0b 100%); }
   .bg-project-helix    { background: linear-gradient(135deg, #831843 0%, #1e0a14 50%, #0b0b0b 100%); }
+  .bg-project-ridelink { background: linear-gradient(135deg, #0d5c63 0%, #0a2a2e 50%, #0b0b0b 100%); }
+  .bg-project-tanimbes { background: linear-gradient(135deg, #047857 0%, #1c3a16 50%, #0b0b0b 100%); }
 
   /* Glow accent dots */
   .glow-magenta { background: #db2777; box-shadow: 0 0 12px 2px rgba(219,39,119,0.33); }
@@ -260,4 +262,18 @@ button:focus-visible {
   /* Scroll animations */
   .animate-scroll-slow   { animation: scroll-up 28s linear infinite; will-change: transform; }
   .animate-scroll-slower { animation: scroll-up 32s linear infinite; will-change: transform; }
+
+  /* Lightbox */
+  .animate-lightbox-in    { animation: lightbox-fade 0.18s ease-out; }
+  .animate-lightbox-zoom  { animation: lightbox-zoom 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+}
+
+@keyframes lightbox-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes lightbox-zoom {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
 }
