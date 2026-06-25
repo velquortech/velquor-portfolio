@@ -46,7 +46,7 @@ export const PROJECTS: Project[] = [
     tags: ["React Native", "Expo", "Botpress", "Supabase", "TypeScript"],
     headerClass: "bg-project-tanimbes",
     imageUrl: "/images/projects-images/tanimbes/tanimbes-1.jpg",
-    imageAlt: "Tanim, Bes! AI plant-care chat assistant app screen",
+    imageAlt: "Tanim, Bes! plant-care companion app banner with Home screen mockup",
     featured: true,
     subtitle:
       "A cross-platform app that puts an AI-powered, Taglish-speaking plant-care assistant in everyone's pocket — chat to diagnose, care for, and grow any plant.",
@@ -73,12 +73,12 @@ export const PROJECTS: Project[] = [
     gallery: [
       {
         caption: "Taglish plant-care chat",
-        src: "/images/projects-images/tanimbes/tanimbes-1.jpg",
+        src: "/images/projects-images/tanimbes/tanimbes-2.jpg",
         alt: "Tanim, Bes! conversational plant-care chat in Taglish",
       },
       {
         caption: "Quick plant topics on Home",
-        src: "/images/projects-images/tanimbes/tanimbes-2.jpg",
+        src: "/images/projects-images/tanimbes/tanimbes-3.jpg",
         alt: "Tanim, Bes! Home screen with quick plant topics and care actions",
       },
     ],
@@ -92,7 +92,7 @@ export const PROJECTS: Project[] = [
     tags: ["React Native", "Expo", "TypeScript", "Supabase", "NativeWind"],
     headerClass: "bg-project-ridelink",
     imageUrl: "/images/projects-images/ridelink/ridelink-1.jpg",
-    imageAlt: "RideLink peer-to-peer vehicle rental app screens",
+    imageAlt: "RideLink peer-to-peer vehicle rental app banner with phone mockup",
     featured: true,
     subtitle:
       "A two-sided vehicle-rental marketplace where every user is both renter and owner — built on a fully serverless stack with live GPS tracking.",
@@ -119,19 +119,19 @@ export const PROJECTS: Project[] = [
     ],
     gallery: [
       {
+        caption: "Onboarding & guest access",
+        src: "/images/projects-images/ridelink/ridelink-2.jpg",
+        alt: "RideLink onboarding screen with sign-in and explore-as-guest options",
+      },
+      {
         caption: "Browse & book vehicles",
-        src: "/images/projects-images/ridelink/ridelink-1.jpg",
+        src: "/images/projects-images/ridelink/ridelink-3.jpg",
         alt: "RideLink vehicle browsing and booking screen",
       },
       {
-        caption: "Rental lifecycle management",
-        src: "/images/projects-images/ridelink/ridelink-2.jpg",
-        alt: "RideLink rental application and approval management screen",
-      },
-      {
-        caption: "Live GPS rental tracking",
-        src: "/images/projects-images/ridelink/ridelink-3.jpg",
-        alt: "RideLink live GPS tracking of an ongoing rental",
+        caption: "Vehicle details & specs",
+        src: "/images/projects-images/ridelink/ridelink-4.jpg",
+        alt: "RideLink vehicle detail screen with specifications and pricing",
       },
     ],
   },
