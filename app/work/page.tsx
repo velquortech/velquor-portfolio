@@ -17,6 +17,21 @@ export const metadata: Metadata = {
     title: "Work — Velquor",
     description:
       "Every project Velquor has shipped — platforms, mobile apps, and systems built for clubs, government, and consumer products.",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Velquor — Software Development Studio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Work — Velquor",
+    description:
+      "Every project Velquor has shipped — platforms, mobile apps, and systems built for clubs, government, and consumer products.",
+    images: ["/images/og-image.png"],
   },
 };
 

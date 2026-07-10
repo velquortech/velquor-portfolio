@@ -9,7 +9,8 @@ const inter = Inter({
   weight: ["400", "500", "600", "700"],
 });
 
-const SITE_URL = "https://velquor.com";
+/** Must match the deployed origin — og:image/canonical URLs resolve against this. */
+const SITE_URL = "https://www.velquortech.com";
 const SITE_NAME = "Velquor";
 const SITE_DESCRIPTION =
   "Velquor builds production-grade web platforms, mobile apps, and backend systems for ambitious companies. Engineered to scale from day one.";

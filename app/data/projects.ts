@@ -19,6 +19,11 @@ export type Project = {
   headerClass: string;
   imageUrl: string;
   imageAlt: string;
+  /** Intrinsic size of imageUrl — emitted as og:image:width/height for link previews. */
+  imageWidth: number;
+  imageHeight: number;
+  /** Dedicated 1200x630 link-preview crop. Falls back to imageUrl when absent. */
+  ogImage?: string;
   /** Highlight this project in the larger spotlight row above the grid. */
   featured?: boolean;
 
@@ -48,6 +53,8 @@ export const PROJECTS: Project[] = [
     imageUrl: "/images/projects-images/pickleball/pickleball-1.png",
     imageAlt:
       "Pickleball District club homepage with live court and queue counts",
+    imageWidth: 1907,
+    imageHeight: 942,
     featured: true,
     subtitle:
       "A fully digitalized pickleball club — live queues, friend-based matchmaking, court bookings, and player tracking replacing the whiteboard at the front desk.",
@@ -99,6 +106,9 @@ export const PROJECTS: Project[] = [
     headerClass: "bg-project-tanimbes",
     imageUrl: "/images/projects-images/tanimbes/tanimbes-1.jpg",
     imageAlt: "Tanim, Bes! plant-care companion app banner with Home screen mockup",
+    imageWidth: 2400,
+    imageHeight: 1346,
+    ogImage: "/images/projects-images/tanimbes/tanimbes-og.jpg",
     featured: true,
     subtitle:
       "A cross-platform app that puts an AI-powered, Taglish-speaking plant-care assistant in everyone's pocket — chat to diagnose, care for, and grow any plant.",
@@ -145,6 +155,9 @@ export const PROJECTS: Project[] = [
     headerClass: "bg-project-ridelink",
     imageUrl: "/images/projects-images/ridelink/ridelink-1.jpg",
     imageAlt: "RideLink peer-to-peer vehicle rental app banner with phone mockup",
+    imageWidth: 2400,
+    imageHeight: 1350,
+    ogImage: "/images/projects-images/ridelink/ridelink-og.jpg",
     subtitle:
       "A two-sided vehicle-rental marketplace where every user is both renter and owner — built on a fully serverless stack with live GPS tracking.",
     client: "Self-initiated product",
@@ -196,6 +209,8 @@ export const PROJECTS: Project[] = [
     headerClass: "bg-project-hrmis",
     imageUrl: "/images/projects-images/hrmis/hrmis-gif.gif",
     imageAlt: "HRMIS dashboard walkthrough showing centralized HR records",
+    imageWidth: 1903,
+    imageHeight: 934,
     subtitle:
       "A centralized HR Management Information System built to unify employee data across government offices.",
     client: "Public Sector HR Division",
@@ -246,6 +261,8 @@ export const PROJECTS: Project[] = [
     headerClass: "bg-project-nfa",
     imageUrl: "/images/projects-images/nfa-trading/nfa-1-dashboard.png",
     imageAlt: "NFA Trading dashboard showing rice trading activity",
+    imageWidth: 1440,
+    imageHeight: 998,
     subtitle:
       "A rice trading platform giving Filipino farmers fairer bids and the NFA full visibility over rice nationwide.",
     client: "National Food Authority (NFA)",

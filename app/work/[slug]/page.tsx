@@ -20,6 +20,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) return { title: "Project not found" };
+
+  // Dedicated crops are authored at exactly 1200x630; otherwise the banner's own size.
+  const preview = project.ogImage
+    ? { url: project.ogImage, width: 1200, height: 630 }
+    : { url: project.imageUrl, width: project.imageWidth, height: project.imageHeight };
+
   return {
     title: project.name,
     description: project.subtitle,
@@ -29,13 +35,13 @@ export async function generateMetadata({
       url: `/work/${project.slug}`,
       title: `${project.name} — Velquor`,
       description: project.subtitle,
-      images: [{ url: project.imageUrl, alt: project.imageAlt }],
+      images: [{ ...preview, alt: project.imageAlt }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${project.name} — Velquor`,
       description: project.subtitle,
-      images: [project.imageUrl],
+      images: [preview.url],
     },
   };
 }
