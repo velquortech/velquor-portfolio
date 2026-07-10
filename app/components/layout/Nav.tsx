@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ThemeToggle } from "../ThemeToggle";
-import { useTheme } from "../ThemeProvider";
 
 const LINKS = [
   { label: "Services", href: "/#services" },
@@ -30,7 +28,6 @@ function CloseIcon() {
 }
 
 export function Nav() {
-  const { theme }               = useTheme();
   const [open, setOpen]         = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -52,11 +49,7 @@ export function Nav() {
         {/* Logo */}
         <Link href="/" className="flex items-center no-underline mr-10 shrink-0" aria-label="Velquor home">
           <Image
-            src={
-              theme === "light"
-                ? "/images/velq-logo-blac.png"
-                : "/images/velq-logo-white.png"
-            }
+            src="/images/velq-logo-white.png"
             alt="Velquor"
             width={44}
             height={28}
@@ -80,8 +73,6 @@ export function Nav() {
 
         {/* Right group */}
         <div className="flex items-center gap-3 ml-auto">
-          <ThemeToggle />
-
           {/* Desktop CTA */}
           <Link
             href="/#contact"

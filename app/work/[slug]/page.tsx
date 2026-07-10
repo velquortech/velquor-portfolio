@@ -79,8 +79,8 @@ export default async function ProjectPage({
         <article className="mx-auto px-6 max-w-[1200px]">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-[13px] text-muted tracking-[-0.13px] mb-8">
-            <Link href="/#work" className="hover:text-ink transition-colors no-underline">
-              Portfolio
+            <Link href="/work" className="hover:text-ink transition-colors no-underline">
+              Work
             </Link>
             <span aria-hidden className="text-muted/50">/</span>
             <span className="text-ink">{project.name}</span>
@@ -220,7 +220,7 @@ export default async function ProjectPage({
                 More projects
               </h2>
               <Link
-                href="/#work"
+                href="/work"
                 className="text-[14px] font-medium text-muted hover:text-ink transition-colors no-underline border-b border-hairline-hover pb-0.5"
               >
                 View all →

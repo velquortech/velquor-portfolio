@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
-/* ── Theme variables (dark default) ── */
+/* ── Theme variables (dark only — the brand ships no light mode) ── */
 :root {
+  color-scheme: dark;
+
   --canvas:          #0b0b0b;
   --s1:              #161616;
   --s2:              #1e1e1e;
@@ -19,27 +21,6 @@
   --nav-blur-bg:  rgba(11,11,11,0.92);
   --fade-color:   #0b0b0b;
   --card-s1-fade: #161616;
-}
-
-/* ── Light theme ── */
-.light {
-  --canvas:          #f5f4f2;
-  --s1:              #edece9;
-  --s2:              #e2e1de;
-  --ink:             #0b0b0b;
-  --muted:           #666666;
-
-  --hairline:        rgba(0,0,0,0.08);
-  --hairline-md:     rgba(0,0,0,0.10);
-  --hairline-strong: rgba(0,0,0,0.14);
-  --hairline-hover:  rgba(0,0,0,0.14);
-  --hairline-active: rgba(0,0,0,0.22);
-
-  --dot-color:    rgba(0,0,0,0.05);
-  --circuit-clr:  #1a1a1a;
-  --nav-blur-bg:  rgba(245,244,242,0.92);
-  --fade-color:   #f5f4f2;
-  --card-s1-fade: #edece9;
 }
 
 /* ── Design tokens ── */
@@ -218,6 +199,7 @@ button:focus-visible {
   .bg-project-helix    { background: linear-gradient(135deg, #831843 0%, #1e0a14 50%, #0b0b0b 100%); }
   .bg-project-ridelink { background: linear-gradient(135deg, #0d5c63 0%, #0a2a2e 50%, #0b0b0b 100%); }
   .bg-project-tanimbes { background: linear-gradient(135deg, #047857 0%, #1c3a16 50%, #0b0b0b 100%); }
+  .bg-project-pickleball { background: linear-gradient(135deg, #4d7c0f 0%, #14261f 50%, #0b0b0b 100%); }
 
   /* Glow accent dots */
   .glow-magenta { background: #db2777; box-shadow: 0 0 12px 2px rgba(219,39,119,0.33); }

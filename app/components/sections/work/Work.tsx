@@ -1,146 +1,15 @@
-import Image from "next/image";
 import Link from "next/link";
-import { PROJECTS, type Project } from "../../../data/projects";
+import { PROJECTS } from "../../../data/projects";
+import { FeaturedCard, ProjectCard } from "./ProjectCards";
 
-function ProjectTags({ tags }: { tags: string[] }) {
-  return (
-    <div className="flex flex-wrap gap-1.5">
-      {tags.map((tag) => (
-        <span
-          key={tag}
-          className="bg-s2 border border-hairline rounded-[6px] px-[10px] py-1 text-[12px] font-medium text-muted tracking-[-0.12px]"
-        >
-          {tag}
-        </span>
-      ))}
-    </div>
-  );
-}
-
-function ResultBadge({ result }: { result: string }) {
-  return (
-    <span className="inline-flex items-center gap-1.5 badge-success rounded-pill px-3 py-1 text-[12px] font-medium tracking-[-0.12px]">
-      <span className="text-[8px]">▲</span>
-      {result}
-    </span>
-  );
-}
-
-function ViewLink() {
-  return (
-    <span className="inline-flex items-center gap-1.5 text-[13px] font-medium text-muted group-hover:text-ink transition-colors">
-      View case study
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-        <path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </span>
-  );
-}
-
-function FeaturedCard({ p }: { p: Project }) {
-  return (
-    <Link
-      href={`/work/${p.slug}`}
-      className="group relative block bg-s1 border-violet-glow hover:-translate-y-1 transition-all duration-300 rounded-spotlight overflow-hidden no-underline"
-    >
-      {/* Image header */}
-      <div className="relative h-[260px] overflow-hidden">
-        <Image
-          src={p.imageUrl}
-          alt={p.imageAlt}
-          fill
-          sizes="(min-width: 1024px) 590px, 100vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        <div aria-hidden className={`absolute inset-0 opacity-80 ${p.headerClass}`} />
-        <div
-          aria-hidden
-          className="absolute bottom-0 inset-x-0 h-28 bg-fade-card-s1 pointer-events-none"
-        />
-
-        {/* Featured marker */}
-        <span className="absolute top-5 left-7 z-10 inline-flex items-center gap-1.5 badge-violet rounded-pill px-3 py-1 text-[11px] font-medium tracking-[0.06em] uppercase">
-          <span className="text-[9px]">★</span>
-          Featured
-        </span>
-
-        <div className="absolute bottom-5 left-7 z-10">
-          <span className="text-[11px] font-medium tracking-[0.10em] uppercase text-white/50">
-            {p.category}
-          </span>
-          <div className="text-display-lg font-bold tracking-display-lg leading-display-card text-ink mt-1">
-            {p.name}
-          </div>
-        </div>
-      </div>
-
-      {/* Info */}
-      <div className="px-7 py-7">
-        <p className="text-[16px] leading-[1.55] tracking-[-0.16px] text-muted mb-5">
-          {p.desc}
-        </p>
-        <div className="mb-5">
-          <ResultBadge result={p.result} />
-        </div>
-        <div className="flex items-center justify-between gap-4">
-          <ProjectTags tags={p.tags} />
-          <ViewLink />
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function ProjectCard({ p }: { p: Project }) {
-  return (
-    <Link
-      href={`/work/${p.slug}`}
-      className="group block bg-s1 border border-hairline hover:border-hairline-hover hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.55)] transition-all duration-300 rounded-card overflow-hidden no-underline"
-    >
-      {/* Image header */}
-      <div className="relative h-[220px] overflow-hidden shrink-0">
-        <Image
-          src={p.imageUrl}
-          alt={p.imageAlt}
-          fill
-          sizes="(min-width: 1024px) 590px, 100vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        <div aria-hidden className={`absolute inset-0 opacity-80 ${p.headerClass}`} />
-        <div
-          aria-hidden
-          className="absolute bottom-0 inset-x-0 h-28 bg-fade-card-s1 pointer-events-none"
-        />
-        <div className="absolute bottom-5 left-7 z-10">
-          <span className="text-[11px] font-medium tracking-[0.10em] uppercase text-white/50">
-            {p.category}
-          </span>
-          <div className="text-display-md font-bold tracking-[-2px] leading-[1.0] text-ink mt-1">
-            {p.name}
-          </div>
-        </div>
-      </div>
-
-      {/* Info */}
-      <div className="px-7 py-6">
-        <p className="text-[15px] leading-[1.55] tracking-[-0.15px] text-muted mb-5">
-          {p.desc}
-        </p>
-        <div className="mb-5">
-          <ResultBadge result={p.result} />
-        </div>
-        <div className="flex items-center justify-between gap-4">
-          <ProjectTags tags={p.tags} />
-          <ViewLink />
-        </div>
-      </div>
-    </Link>
-  );
-}
+/** Number of projects surfaced on the landing page; the rest live on /work. */
+const LANDING_COUNT = 4;
 
 export function Work() {
-  const featured = PROJECTS.filter((p) => p.featured);
-  const rest = PROJECTS.filter((p) => !p.featured);
+  const shown = PROJECTS.slice(0, LANDING_COUNT);
+  const featured = shown.filter((p) => p.featured);
+  const rest = shown.filter((p) => !p.featured);
+  const remaining = PROJECTS.length - shown.length;
 
   return (
     <section id="work" className="py-24">
@@ -187,6 +56,24 @@ export function Work() {
             ))}
           </div>
         )}
+
+        {/* All-projects entry point */}
+        <div className="flex flex-col items-center gap-3 mt-14">
+          <Link
+            href="/work"
+            className="inline-flex items-center gap-2 bg-ink text-canvas px-[22px] py-[11px] rounded-pill text-[14px] font-semibold tracking-[-0.14px] no-underline hover:opacity-90 active:scale-[0.98] transition-all duration-200"
+          >
+            View all projects
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
+              <path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
+          {remaining > 0 && (
+            <p className="text-[13px] text-muted tracking-[-0.13px] m-0">
+              {remaining} more {remaining === 1 ? "case study" : "case studies"} in the archive
+            </p>
+          )}
+        </div>
       </div>
     </section>
   );
