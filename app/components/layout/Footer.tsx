@@ -1,8 +1,5 @@
-"use client";
-
 import Image from "next/image";
 import { Facebook, Instagram, Linkedin } from "lucide-react";
-import { useTheme } from "../ThemeProvider";
 
 const SOCIALS = [
   {
@@ -38,7 +35,7 @@ const COLS = [
     title: "Company",
     links: [
       { label: "About", href: "#" },
-      { label: "Work", href: "#work" },
+      { label: "Work", href: "/work" },
       { label: "Process", href: "#process" },
       { label: "Careers", href: "#" },
       { label: "Blog", href: "#" },
@@ -47,7 +44,10 @@ const COLS = [
   {
     title: "Contact",
     links: [
-      { label: "hello@velquor.com", href: "mailto:hello@velquor.com" },
+      {
+        label: "velquortechnologies@gmail.com",
+        href: "mailto:velquortechnologies@gmail.com",
+      },
       { label: "Start a project", href: "#contact" },
       { label: "Request a quote", href: "#contact" },
       { label: "Schedule a call", href: "#contact" },
@@ -64,8 +64,6 @@ const COLS = [
 ];
 
 export function Footer() {
-  const { theme } = useTheme();
-
   return (
     <footer className="relative pt-16 pb-10 px-6">
       {/* Top gradient rule */}
@@ -81,11 +79,7 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-2.5 mb-1">
               <Image
-                src={
-                  theme === "light"
-                    ? "/images/velq-logo-blac.png"
-                    : "/images/velq-logo-white.png"
-                }
+                src="/images/velq-logo-white.png"
                 alt="Velquor"
                 width={36}
                 height={23}

@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "./components/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -81,18 +80,17 @@ export const metadata: Metadata = {
   },
 };
 
+/** The brand is dark-only — tell the UA so form controls and scrollbars follow. */
+export const viewport: Viewport = {
+  themeColor: "#0b0b0b",
+  colorScheme: "dark",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full`} suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('velquor-theme');if(!t)t=window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark';if(t==='light')document.documentElement.classList.add('light');}catch(e){}})();`,
-          }}
-        />
-      </head>
+    <html lang="en" className={`${inter.variable} h-full`}>
       <body className="min-h-full bg-canvas text-ink antialiased">
 
         {/* ── Fixed circuit-trace background ── */}
@@ -168,9 +166,7 @@ export default function RootLayout({
 
         {/* Page content — above background */}
         <div className="relative" style={{ zIndex: 2 }}>
-          <ThemeProvider>
-            {children}
-          </ThemeProvider>
+          {children}
         </div>
 
       </body>

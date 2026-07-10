@@ -38,6 +38,58 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "pickleball-district",
+    name: "Pickleball District",
+    category: "Pickleball Club Operations Platform",
+    desc: "A digital court-and-queue system for an indoor pickleball club — players queue, follow friends, and stack onto courts while the front desk runs matches, bookings, and player data from one dashboard.",
+    result: "Retires the whiteboard queue",
+    tags: ["Next.js", "React", "TypeScript", "Supabase", "Tailwind CSS"],
+    headerClass: "bg-project-pickleball",
+    imageUrl: "/images/projects-images/pickleball/pickleball-1.png",
+    imageAlt:
+      "Pickleball District club homepage with live court and queue counts",
+    featured: true,
+    subtitle:
+      "A fully digitalized pickleball club — live queues, friend-based matchmaking, court bookings, and player tracking replacing the whiteboard at the front desk.",
+    client: "Pickleball District, Iloilo City",
+    industry: "Sports & Recreation · Club Operations Software",
+    timeline: "In active development (2026)",
+    services: [
+      "Live queue and court-status display",
+      "Player accounts with follow and invite-to-court",
+      "VIP court booking with online payment",
+      "Front-desk admin dashboard",
+      "Player and match data tracking",
+    ],
+    challenge:
+      "Open-play pickleball runs on a whiteboard. Names get written in a column, a staff member calls the next four when a court frees up, and everyone else stands around guessing how long the wait is. The system breaks down the moment the club gets busy: turns get skipped, friends who came together get split across courts, walk-ins argue over position, and nothing about who played, how long, or how often survives the end of the session. Private court rentals and coaching slots lived in a separate notebook, double-booked as often as not, with payment collected on trust at the desk.",
+    solution:
+      "Pickleball District turns the whole club into one live system. Players check in and hold a real position in a queue they can watch from the wall display or from their phone, then claim an open court, stack onto a short one, or pull in the friends they follow for a doubles match — matchmaking becomes social rather than administrative. Playing time is tracked as a balance in minutes that players can top up, and each 20-minute rotation ends and re-queues automatically. Behind the desk, staff run one dashboard: add walk-ins, end and rotate matches, open or retire courts, and see waiting, in-play, free-court, and booking counts at a glance. VIP courts and coaching sessions are reserved and paid online against real availability, returning a booking reference instead of a line in a notebook. Match duration, players per court, opening hours, and payment hold windows are all configurable, so the club tunes its own rules — and every match, player, and transaction is recorded rather than erased.",
+    results: [
+      "Whiteboard and manual stacking replaced by a live, self-service queue",
+      "Friend follow and court invites turn matchmaking into a social flow",
+      "VIP court and coaching bookings reserved and paid online, no double-booking",
+      "Every match, player, and transaction tracked instead of erased at close",
+    ],
+    gallery: [
+      {
+        caption: "Live court & queue display",
+        src: "/images/projects-images/pickleball/pickleball-7.png",
+        alt: "Pickleball District live court display showing occupied courts, players, and queue status",
+      },
+      {
+        caption: "Claim a court, invite friends",
+        src: "/images/projects-images/pickleball/pickleball-15.png",
+        alt: "Pickleball District player dashboard with open courts, playing time balance, queue, and friends list",
+      },
+      {
+        caption: "Front-desk queue management",
+        src: "/images/projects-images/pickleball/pickleball-10.png",
+        alt: "Pickleball District staff admin dashboard for adding walk-ins and filling open courts",
+      },
+    ],
+  },
+  {
     slug: "tanimbes",
     name: "Tanim, Bes!",
     category: "AI Plant-Care Assistant",
@@ -93,7 +145,6 @@ export const PROJECTS: Project[] = [
     headerClass: "bg-project-ridelink",
     imageUrl: "/images/projects-images/ridelink/ridelink-1.jpg",
     imageAlt: "RideLink peer-to-peer vehicle rental app banner with phone mockup",
-    featured: true,
     subtitle:
       "A two-sided vehicle-rental marketplace where every user is both renter and owner — built on a fully serverless stack with live GPS tracking.",
     client: "Self-initiated product",
@@ -145,7 +196,6 @@ export const PROJECTS: Project[] = [
     headerClass: "bg-project-hrmis",
     imageUrl: "/images/projects-images/hrmis/hrmis-gif.gif",
     imageAlt: "HRMIS dashboard walkthrough showing centralized HR records",
-    featured: true,
     subtitle:
       "A centralized HR Management Information System built to unify employee data across government offices.",
     client: "Public Sector HR Division",
@@ -196,7 +246,6 @@ export const PROJECTS: Project[] = [
     headerClass: "bg-project-nfa",
     imageUrl: "/images/projects-images/nfa-trading/nfa-1-dashboard.png",
     imageAlt: "NFA Trading dashboard showing rice trading activity",
-    featured: true,
     subtitle:
       "A rice trading platform giving Filipino farmers fairer bids and the NFA full visibility over rice nationwide.",
     client: "National Food Authority (NFA)",
