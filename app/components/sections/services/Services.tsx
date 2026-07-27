@@ -7,11 +7,10 @@ type Spotlight = {
   sub: string;
 };
 
+/* Regular cards carry no color of their own — one violet corner wash, one glow
+   dot, one badge. They read apart by title and copy. */
 type Regular = {
   kind: "regular";
-  cornerClass: string;
-  glowClass: string;
-  badgeClass: string;
   title: string;
   desc: string;
   techLabel: string;
@@ -28,44 +27,32 @@ const SERVICES: (Spotlight | Regular)[] = [
   },
   {
     kind: "regular",
-    cornerClass: "bg-corner-magenta",
-    glowClass: "glow-magenta",
-    badgeClass: "badge-magenta",
     title: "Web Platforms & SaaS",
     desc: "Full-stack applications built for performance and growth — from MVP to enterprise scale.",
     techLabel: "React · Next.js · TypeScript",
   },
   {
     kind: "regular",
-    cornerClass: "bg-corner-coral",
-    glowClass: "glow-coral",
-    badgeClass: "badge-coral",
     title: "Mobile Applications",
     desc: "Cross-platform iOS and Android apps with React Native, plus native builds when performance demands it.",
     techLabel: "React Native · Swift · Kotlin",
   },
   {
     kind: "spotlight",
-    bgClass: "bg-spotlight-orange",
-    borderClass: "border-orange-glow",
+    bgClass: "bg-spotlight-violet-soft",
+    borderClass: "border-violet-soft-glow",
     chipLabel: "Backend & Data",
     headline: "API-first\narchitecture.",
     sub: "Scalable backends, microservices, and data pipelines designed for the long haul.",
   },
   {
     kind: "regular",
-    cornerClass: "bg-corner-indigo",
-    glowClass: "glow-indigo",
-    badgeClass: "badge-indigo",
     title: "Cloud & DevOps",
     desc: "AWS and GCP infrastructure, Docker, Kubernetes, CI/CD pipelines, and zero-downtime deployments.",
     techLabel: "AWS · Docker · Kubernetes · Terraform",
   },
   {
     kind: "regular",
-    cornerClass: "bg-corner-orange",
-    glowClass: "glow-orange",
-    badgeClass: "badge-orange",
     title: "UI/UX Engineering",
     desc: "Design systems, component libraries, and pixel-perfect interfaces that drive conversion.",
     techLabel: "Figma · Tailwind · Storybook",
@@ -101,7 +88,7 @@ export function Services() {
           <p className="text-[12px] font-medium tracking-[0.10em] text-muted uppercase mb-3">
             What we do
           </p>
-          <h2 className="text-display-xl font-bold tracking-display-xl leading-display-section text-ink max-w-[600px]">
+          <h2 className="text-display-xl font-display font-bold uppercase tracking-display-xl leading-display-section text-ink max-w-[600px]">
             Every layer, <span className="text-gradient-palette">handled.</span>
           </h2>
         </div>
@@ -125,7 +112,7 @@ export function Services() {
                   <div className="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-pill px-3 py-1.5 text-[11px] font-medium tracking-[0.06em] text-white/70 uppercase mb-5">
                     {s.chipLabel}
                   </div>
-                  <h3 className="text-display-lg font-bold tracking-display-lg leading-display-card text-ink whitespace-pre-line mb-3">
+                  <h3 className="text-display-lg font-display font-bold uppercase tracking-display-lg leading-display-card text-ink whitespace-pre-line mb-3">
                     {s.headline}
                   </h3>
                   <p className="text-[15px] leading-[1.6] tracking-[-0.15px] text-white/65">
@@ -140,15 +127,13 @@ export function Services() {
               >
                 <div
                   aria-hidden
-                  className={`absolute top-0 right-0 w-48 h-48 pointer-events-none ${s.cornerClass}`}
+                  className="absolute top-0 right-0 w-48 h-48 pointer-events-none bg-corner-violet"
                 />
 
                 <div className="relative flex flex-col flex-1 px-6 pb-6 pt-8">
-                  <div
-                    className={`w-2 h-2 rounded-full mb-6 shrink-0 ${s.glowClass}`}
-                  />
+                  <div className="w-2 h-2 rounded-full mb-6 shrink-0 glow-violet" />
 
-                  <h3 className="text-[21px] font-bold tracking-[-1px] leading-[1.2] text-ink mb-3">
+                  <h3 className="text-[21px] font-display font-bold uppercase tracking-display-md leading-[1.2] text-ink mb-3">
                     {s.title}
                   </h3>
 
@@ -156,9 +141,7 @@ export function Services() {
                     {s.desc}
                   </p>
 
-                  <span
-                    className={`self-start rounded-pill px-3 py-1 text-[11px] font-medium tracking-[0.04em] mb-8 ${s.badgeClass}`}
-                  >
+                  <span className="self-start rounded-pill px-3 py-1 text-[11px] font-medium tracking-[0.04em] mb-8 badge-violet">
                     {s.techLabel}
                   </span>
 

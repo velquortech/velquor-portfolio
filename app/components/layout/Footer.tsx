@@ -77,7 +77,9 @@ export function Footer() {
         <div className="footer-grid grid gap-8 mb-16">
           {/* Brand column */}
           <div>
-            <div className="flex items-center gap-2.5 mb-1">
+            {/* gap = 0.5x the mark's cap-height (24px mark -> 12px) per the
+                hand-off lockup spec */}
+            <div className="flex items-center gap-3 mb-1">
               <Image
                 src="/images/velq-logo-white.png"
                 alt="Velquor"
@@ -89,13 +91,25 @@ export function Footer() {
                 VELQUOR TECHNOLOGIES CORP.
               </span>
             </div>
-            {/* <p className="text-[11px] font-medium tracking-[0.08em] uppercase text-muted mb-4"> */}
-            {/*   Est. 2019 · Remote-first */}
-            {/* </p> */}
+            {/* Primary tagline. Set in Inter, not the display face — the
+                hand-off sets it in Space Grotesk caps at poster sizes, and
+                display type below 20px is off-spec. */}
+            <p className="text-[12px] font-semibold tracking-[0.08em] uppercase leading-[1.5] text-violet-300 mt-3 mb-3 max-w-[210px]">
+              Systems crafted to grow. Partnerships built to stay.
+            </p>
+
             <p className="text-[13px] leading-[1.65] text-muted tracking-[-0.13px] max-w-[210px]">
               Software development studio building production-grade systems for
               ambitious teams worldwide.
             </p>
+
+            <address className="not-italic text-[13px] leading-[1.65] text-muted tracking-[-0.13px] max-w-[210px] mt-4">
+              Taft Street, Barangay Zone IV (Pob.)
+              <br />
+              Santa Barbara, Iloilo
+              <br />
+              Region VI (Western Visayas), 5002
+            </address>
 
             {/* Social links */}
             <div className="flex items-center gap-2.5 mt-5">
@@ -138,7 +152,8 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-hairline pt-6 flex flex-wrap items-center justify-between gap-3">
           <span className="text-[13px] text-muted tracking-[-0.13px]">
-            © {new Date().getFullYear()} Velquor. All rights reserved.
+            © {new Date().getFullYear()} Velquor Technologies Corporation. All
+            rights reserved.
           </span>
           <div className="flex items-center gap-6">
             <span className="text-[13px] text-muted tracking-[-0.13px]">

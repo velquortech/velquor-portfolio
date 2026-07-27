@@ -68,7 +68,7 @@ export function FeaturedCard({ p }: { p: Project }) {
           <span className="text-[11px] font-medium tracking-[0.10em] uppercase text-white/50">
             {p.category}
           </span>
-          <div className="text-display-lg font-bold tracking-display-lg leading-display-card text-ink mt-1">
+          <div className="text-display-lg font-display font-bold uppercase tracking-display-lg leading-display-card text-ink mt-1">
             {p.name}
           </div>
         </div>
@@ -115,7 +115,7 @@ export function ProjectCard({ p }: { p: Project }) {
           <span className="text-[11px] font-medium tracking-[0.10em] uppercase text-white/50">
             {p.category}
           </span>
-          <div className="text-display-md font-bold tracking-[-2px] leading-[1.0] text-ink mt-1">
+          <div className="text-display-md font-display font-bold uppercase tracking-display-md leading-[1.0] text-ink mt-1">
             {p.name}
           </div>
         </div>

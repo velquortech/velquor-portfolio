@@ -76,7 +76,7 @@ export function Nav() {
           {/* Desktop CTA */}
           <Link
             href="/#contact"
-            className="hidden md:inline-flex items-center gap-1.5 bg-ink text-canvas px-[18px] py-2 rounded-pill text-[14px] font-semibold tracking-[-0.14px] no-underline"
+            className="hidden md:inline-flex items-center gap-1.5 bg-violet-500 text-white hover:bg-violet-700 transition-colors duration-200 px-[18px] py-2 rounded-pill text-[14px] font-semibold tracking-[-0.14px] no-underline"
           >
             Get in touch
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
@@ -114,7 +114,7 @@ export function Nav() {
           <Link
             href="/#contact"
             onClick={() => setOpen(false)}
-            className="inline-block mt-5 bg-ink text-canvas px-[22px] py-[10px] rounded-pill text-[14px] font-semibold no-underline"
+            className="inline-block mt-5 bg-violet-500 text-white hover:bg-violet-700 transition-colors duration-200 px-[22px] py-[10px] rounded-pill text-[14px] font-semibold no-underline"
           >
             Get in touch →
           </Link>

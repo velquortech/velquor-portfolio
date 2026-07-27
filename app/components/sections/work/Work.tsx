@@ -20,7 +20,7 @@ export function Work() {
             <p className="text-[12px] font-medium tracking-[0.10em] text-muted uppercase mb-3">
               Selected work
             </p>
-            <h2 className="text-display-xl font-bold tracking-display-xl leading-display-section text-ink">
+            <h2 className="text-display-xl font-display font-bold uppercase tracking-display-xl leading-display-section text-ink">
               Projects that
               <br />
               speak for us.
@@ -61,7 +61,7 @@ export function Work() {
         <div className="flex flex-col items-center gap-3 mt-14">
           <Link
             href="/work"
-            className="inline-flex items-center gap-2 bg-ink text-canvas px-[22px] py-[11px] rounded-pill text-[14px] font-semibold tracking-[-0.14px] no-underline hover:opacity-90 active:scale-[0.98] transition-all duration-200"
+            className="inline-flex items-center gap-2 bg-violet-500 text-white hover:bg-violet-700 transition-colors duration-200 px-[22px] py-[11px] rounded-pill text-[14px] font-semibold tracking-[-0.14px] no-underline hover:opacity-90 active:scale-[0.98] transition-all duration-200"
           >
             View all projects
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
