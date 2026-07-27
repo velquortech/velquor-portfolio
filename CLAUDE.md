@@ -15,7 +15,7 @@ The identity's signature graphic device is the **stepped-bar field**: horizontal
 - Atmosphere is a **single violet dome**, one bloom, one hue. Never a multi-source mesh.
 - Cards separate by icon, copy, and ramp depth — never by hue.
 
-Full brand audit, provenance, and the remaining action items live in **`.claude/BRAND-PARITY.md`**, with sampled reference art in `.claude/brand-reference/`.
+The full brand audit (`BRAND-PARITY.md`) and the sampled hand-off art it cites are **deliberately not in this repo** — they live in the team's local `.claude/` working directory only. Everything binding on the code is restated in this file; if you need the audit's provenance or the reference boards, ask the maintainer for a copy rather than looking for the path.
 
 ## Colours
 
