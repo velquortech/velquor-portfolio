@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <span className="text-display-md font-bold tracking-[-1px] leading-[1.0] text-ink">
+      <span className="text-display-md font-display font-bold uppercase tracking-display-md leading-[1.0] text-ink">
         {value}
       </span>
       <span className="text-[12px] font-medium tracking-[0.10em] uppercase text-muted">
@@ -73,7 +73,7 @@ export default function WorkPage() {
             <p className="text-[12px] font-medium tracking-[0.10em] text-muted uppercase mb-4">
               The full archive
             </p>
-            <h1 className="text-display-xl font-bold tracking-display-xl leading-display-section text-ink mb-6">
+            <h1 className="text-display-xl font-display font-bold uppercase tracking-display-xl leading-display-section text-ink mb-6">
               Everything
               <br />
               we&apos;ve built.
@@ -122,7 +122,7 @@ export default function WorkPage() {
           )}
         </div>
 
-        <CTABand />
+        <CTABand sourcePage="/work" />
       </main>
       <Footer />
     </>

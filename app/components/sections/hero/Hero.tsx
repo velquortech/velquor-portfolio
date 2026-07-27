@@ -14,21 +14,12 @@ export function Hero() {
         aria-hidden
         className="absolute inset-0 bg-hero-mesh pointer-events-none z-0"
       />
+      {/* One bloom only. The four-orb arrangement here rotated through four
+          hues; the identity's atmosphere is a single violet dome, which
+          bg-hero-mesh now carries. */}
       <div
         aria-hidden
-        className="absolute top-[18%] -left-[8%] w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] lg:w-[560px] lg:h-[560px] bg-orb-violet blur-[72px] pointer-events-none z-0"
-      />
-      <div
-        aria-hidden
-        className="absolute -top-[10%] -right-[5%] w-[240px] h-[240px] sm:w-[340px] sm:h-[340px] lg:w-[480px] lg:h-[480px] bg-orb-magenta blur-[80px] pointer-events-none z-0"
-      />
-      <div
-        aria-hidden
-        className="absolute bottom-0 right-[15%] w-[200px] h-[200px] sm:w-[280px] sm:h-[280px] lg:w-[380px] lg:h-[380px] bg-orb-orange blur-[72px] pointer-events-none z-0"
-      />
-      <div
-        aria-hidden
-        className="absolute bottom-[5%] left-[20%] w-[160px] h-[160px] sm:w-[240px] sm:h-[240px] lg:w-[320px] lg:h-[320px] bg-orb-coral blur-[64px] pointer-events-none z-0"
+        className="absolute -top-[12%] left-1/2 -translate-x-1/2 w-[420px] h-[420px] sm:w-[620px] sm:h-[620px] lg:w-[820px] lg:h-[820px] bg-orb-violet blur-[90px] pointer-events-none z-0"
       />
       <div
         aria-hidden
@@ -40,13 +31,13 @@ export function Hero() {
         {/* Left — text */}
         <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
           {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2 bg-[rgba(124,58,237,0.10)] border border-[rgba(124,58,237,0.25)] rounded-pill px-[14px] py-[6px] text-[12px] font-medium tracking-[0.06em] text-[#a78bfa] uppercase mb-7 w-fit">
+          <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/25 rounded-pill px-[14px] py-[6px] text-[12px] font-medium tracking-[0.06em] text-violet-300 uppercase mb-7 w-fit">
             <span className="w-[6px] h-[6px] rounded-full bg-success shrink-0" />
             Software Development Studio
           </div>
 
           {/* Headline */}
-          <h1 className="text-display-xxl font-bold tracking-display-hero leading-display-tight text-ink mb-6">
+          <h1 className="text-display-xxl font-display font-bold uppercase tracking-display-hero leading-display-tight text-ink mb-6">
             We craft
             <br />
             <span className="text-gradient-hero">software</span>
@@ -64,7 +55,7 @@ export function Hero() {
           <div className="flex flex-wrap gap-3 mb-12 justify-center lg:justify-start">
             <a
               href="#contact"
-              className="inline-flex items-center gap-[6px] bg-ink text-canvas px-6 py-3 rounded-pill text-[14px] font-semibold tracking-[-0.14px] no-underline"
+              className="inline-flex items-center gap-[6px] bg-violet-500 text-white hover:bg-violet-700 transition-colors duration-200 px-6 py-3 rounded-pill text-[14px] font-semibold tracking-[-0.14px] no-underline"
             >
               Start a project
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -89,7 +80,7 @@ export function Hero() {
           <div className="flex gap-8 pt-7 border-t-gradient-palette justify-center lg:justify-start w-full">
             {STATS.map(({ value, label }) => (
               <div key={label}>
-                <div className="text-display-md font-bold tracking-[-1px] leading-[1.05] text-ink">
+                <div className="text-display-md font-display font-bold uppercase tracking-display-md leading-[1.05] text-ink">
                   {value}
                 </div>
                 <div className="text-[12px] text-muted tracking-[-0.12px] mt-0.5">

@@ -16,9 +16,9 @@ const CORE_TECHS = [
     icon: BrainCircuit as IconNode,
     category: "AI & Machine Learning",
     tagline: "Intelligent Solutions",
-    accent: "border-t-magenta",
-    iconColor: "text-magenta border-1",
-    label: "text-magenta",
+    accent: "border-t-violet-500",
+    iconColor: "text-violet-300 border-1",
+    label: "text-violet-300",
     spotlight: true,
     items: [
       "OpenAI GPT-4 & ChatGPT",
@@ -32,9 +32,9 @@ const CORE_TECHS = [
     icon: Atom as IconNode,
     category: "React Ecosystem",
     tagline: "Modern Frontend",
-    accent: "border-t-indigo",
-    iconColor: "text-indigo",
-    label: "text-indigo",
+    accent: "border-t-violet-500",
+    iconColor: "text-violet-300",
+    label: "text-violet-300",
     spotlight: false,
     items: [
       "React 18+",
@@ -48,9 +48,9 @@ const CORE_TECHS = [
     icon: Braces as IconNode,
     category: "TypeScript",
     tagline: "Type-Safe Development",
-    accent: "border-t-violet",
-    iconColor: "text-violet",
-    label: "text-violet",
+    accent: "border-t-violet-500",
+    iconColor: "text-violet-300",
+    label: "text-violet-300",
     spotlight: false,
     items: [
       "Strict Type Checking",
@@ -63,9 +63,9 @@ const CORE_TECHS = [
     icon: Gem as IconNode,
     category: "Ruby on Rails",
     tagline: "Rapid Development",
-    accent: "border-t-coral",
-    iconColor: "text-coral",
-    label: "text-coral",
+    accent: "border-t-violet-500",
+    iconColor: "text-violet-300",
+    label: "text-violet-300",
     spotlight: false,
     items: [
       "Rapid Prototyping",
@@ -79,9 +79,9 @@ const CORE_TECHS = [
     icon: FlaskConical as IconNode,
     category: "Elixir",
     tagline: "Fault-Tolerant Systems",
-    accent: "border-t-orange",
-    iconColor: "text-orange",
-    label: "text-orange",
+    accent: "border-t-violet-500",
+    iconColor: "text-violet-300",
+    label: "text-violet-300",
     spotlight: false,
     items: [
       "Phoenix Framework",
@@ -94,9 +94,9 @@ const CORE_TECHS = [
     icon: Terminal as IconNode,
     category: "Python",
     tagline: "Data Science & AI",
-    accent: "border-t-indigo",
-    iconColor: "text-indigo",
-    label: "text-indigo",
+    accent: "border-t-violet-500",
+    iconColor: "text-violet-300",
+    label: "text-violet-300",
     spotlight: false,
     items: [
       "TensorFlow & PyTorch",
@@ -129,7 +129,7 @@ export function TechStack() {
             <p className="text-[12px] font-medium tracking-[0.10em] text-muted uppercase mb-3">
               Core technologies
             </p>
-            <h2 className="text-display-xl font-bold tracking-display-xl leading-display-section text-ink">
+            <h2 className="text-display-xl font-display font-bold uppercase tracking-display-xl leading-display-section text-ink">
               Built on the
               <br />
               right stack.
@@ -170,7 +170,7 @@ export function TechStack() {
                     <Icon data={icon} size={28} />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold tracking-[-0.3px] text-ink leading-snug">
+                    <h3 className="text-xl font-display font-bold uppercase tracking-display-md text-ink leading-snug">
                       {category}
                     </h3>
                     <p

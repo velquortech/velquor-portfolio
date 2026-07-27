@@ -6,6 +6,7 @@ import { Nav } from "../../components/layout/Nav";
 import { Footer } from "../../components/layout/Footer";
 import { CTABand } from "../../components/sections/cta/CTABand";
 import { PROJECTS, getProject } from "../../data/projects";
+import { StepField } from "../../components/brand/StepField";
 import { LightboxProvider, ZoomTrigger } from "./Lightbox";
 
 export function generateStaticParams() {
@@ -82,7 +83,7 @@ export default async function ProjectPage({
       <Nav />
       <main className="pt-28">
        <LightboxProvider>
-        <article className="mx-auto px-6 max-w-[1200px]">
+        <article className="relative mx-auto px-6 max-w-[1200px]">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-[13px] text-muted tracking-[-0.13px] mb-8">
             <Link href="/work" className="hover:text-ink transition-colors no-underline">
@@ -92,12 +93,19 @@ export default async function ProjectPage({
             <span className="text-ink">{project.name}</span>
           </nav>
 
+          {/* Signature stepped-bar field, anchored off the title. Hidden below
+              lg — under ~1024px it would run beneath the copy. */}
+          <StepField
+            flip
+            className="hidden lg:block absolute right-0 top-[120px] h-[280px] w-[380px] pointer-events-none opacity-30"
+          />
+
           {/* Title */}
-          <header className="max-w-[760px] mb-12">
+          <header className="relative max-w-[760px] mb-12">
             <p className="text-[12px] font-medium tracking-[0.10em] text-muted uppercase mb-4">
               {project.category}
             </p>
-            <h1 className="text-display-xl font-bold tracking-display-xl leading-display-section text-ink mb-5">
+            <h1 className="text-display-xl font-display font-bold uppercase tracking-display-xl leading-display-section text-ink mb-5">
               {project.name}
             </h1>
             <p className="text-[clamp(16px,2vw,20px)] leading-[1.5] tracking-[-0.2px] text-muted">
@@ -121,7 +129,7 @@ export default async function ProjectPage({
 
           {/* Project overview */}
           <section className="mb-16">
-            <h2 className="text-display-md font-bold tracking-[-1px] text-ink mb-7">
+            <h2 className="text-display-md font-display font-bold uppercase tracking-display-md text-ink mb-7">
               Project Overview
             </h2>
             <div className="bg-s1 border border-hairline rounded-card px-8 py-8 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -135,7 +143,7 @@ export default async function ProjectPage({
           {/* Challenge + Solution */}
           <section className="grid gap-12 lg:grid-cols-2 mb-16">
             <div>
-              <h2 className="text-display-md font-bold tracking-[-1px] text-ink mb-5">
+              <h2 className="text-display-md font-display font-bold uppercase tracking-display-md text-ink mb-5">
                 The Challenge
               </h2>
               <p className="text-[16px] leading-[1.65] tracking-[-0.16px] text-muted">
@@ -143,7 +151,7 @@ export default async function ProjectPage({
               </p>
             </div>
             <div>
-              <h2 className="text-display-md font-bold tracking-[-1px] text-ink mb-5">
+              <h2 className="text-display-md font-display font-bold uppercase tracking-display-md text-ink mb-5">
                 Our Solution
               </h2>
               <p className="text-[16px] leading-[1.65] tracking-[-0.16px] text-muted">
@@ -154,7 +162,7 @@ export default async function ProjectPage({
 
           {/* Gallery */}
           <section className="mb-16">
-            <h2 className="text-display-md font-bold tracking-[-1px] text-ink mb-7">
+            <h2 className="text-display-md font-display font-bold uppercase tracking-display-md text-ink mb-7">
               Project Gallery
             </h2>
             <div className={`grid gap-3 ${galleryCols}`}>
@@ -199,7 +207,7 @@ export default async function ProjectPage({
 
           {/* Results */}
           <section className="mb-20">
-            <h2 className="text-display-md font-bold tracking-[-1px] text-ink mb-7">
+            <h2 className="text-display-md font-display font-bold uppercase tracking-display-md text-ink mb-7">
               Results
             </h2>
             <ul className="grid gap-3 sm:grid-cols-2 list-none p-0 m-0">
@@ -222,7 +230,7 @@ export default async function ProjectPage({
           {/* More projects */}
           <section className="mb-4">
             <div className="flex items-end justify-between flex-wrap gap-4 mb-7">
-              <h2 className="text-display-md font-bold tracking-[-1px] text-ink">
+              <h2 className="text-display-md font-display font-bold uppercase tracking-display-md text-ink">
                 More projects
               </h2>
               <Link
@@ -256,7 +264,7 @@ export default async function ProjectPage({
                       <span className="text-[10px] font-medium tracking-[0.10em] uppercase text-white/50">
                         {p.category}
                       </span>
-                      <div className="text-[22px] font-bold tracking-[-1px] leading-[1.0] text-ink mt-0.5">
+                      <div className="text-[22px] font-display font-bold uppercase tracking-display-md leading-[1.0] text-ink mt-0.5">
                         {p.name}
                       </div>
                     </div>
@@ -273,7 +281,8 @@ export default async function ProjectPage({
         </article>
        </LightboxProvider>
 
-        <CTABand />
+        {/* Leads from a case study arrive tagged with what they were reading. */}
+        <CTABand sourcePage={`/work/${project.slug}`} interestedIn={project.name} />
       </main>
       <Footer />
     </>

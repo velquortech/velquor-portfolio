@@ -39,7 +39,7 @@ export function Process() {
             <p className="text-[12px] font-medium tracking-[0.10em] text-muted uppercase mb-3">
               How we work
             </p>
-            <h2 className="text-display-xl font-bold tracking-display-xl leading-display-section text-ink">
+            <h2 className="text-display-xl font-display font-bold uppercase tracking-display-xl leading-display-section text-ink">
               No surprises.
               <br />
               No excuses.
@@ -58,7 +58,7 @@ export function Process() {
             >
               <div
                 aria-hidden
-                className="absolute left-0 top-4 bottom-4 w-[2px] rounded-full bg-gradient-to-b from-violet via-magenta to-orange opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                className="absolute left-0 top-4 bottom-4 w-[2px] rounded-full bg-gradient-to-b from-violet-500 via-violet-300 to-violet-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
               />
 
               <div className="flex items-baseline gap-4 md:contents">
@@ -66,7 +66,7 @@ export function Process() {
                   {step.num}
                 </span>
 
-                <h3 className="shrink-0 md:w-44 text-[20px] font-bold tracking-[-0.8px] leading-[1.2] text-ink transition-colors duration-200">
+                <h3 className="shrink-0 md:w-44 text-[20px] font-display font-bold uppercase tracking-display-md leading-[1.2] text-ink transition-colors duration-200">
                   {step.title}
                 </h3>
               </div>

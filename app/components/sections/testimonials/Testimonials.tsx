@@ -10,9 +10,9 @@ rice production planning and outcomes.`,
     author: "Daryl Jane Armada",
     role: "Smart Agriculture: Reliable Rice Production Decision-Making",
     initials: "DJ",
-    avatarClass: "bg-[#7c3aed]",
-    topLine: "from-transparent via-[#7c3aed]/60 to-transparent",
-    glowShadow: "rgba(124,58,237,0.15)",
+    avatarClass: "bg-violet-500 text-white",
+    topLine: "from-transparent via-violet-500/60 to-transparent",
+    glowShadow: "rgba(102,0,255,0.15)",
   },
   {
     quote: `Your patience and support helped us build a fully
@@ -25,9 +25,9 @@ process!`,
     author: "Abegail Marie",
     role: "Smart Pushcart System: Real-Time Price Tracking",
     initials: "AM",
-    avatarClass: "bg-[#0284c7]",
-    topLine: "from-transparent via-[#0284c7]/60 to-transparent",
-    glowShadow: "rgba(2,132,199,0.15)",
+    avatarClass: "bg-violet-700 text-white",
+    topLine: "from-transparent via-violet-700/60 to-transparent",
+    glowShadow: "rgba(61,0,153,0.15)",
   },
   {
     quote: `I am highly satisfied with the system's functionality. It is
@@ -39,9 +39,9 @@ dependable, and valuable asset.`,
     author: "Jay Czhelle Soberano",
     role: "Reliable Software Architecture: Efficient User Experience",
     initials: "JC",
-    avatarClass: "bg-[#ea580c]",
-    topLine: "from-transparent via-[#ea580c]/60 to-transparent",
-    glowShadow: "rgba(234,88,12,0.15)",
+    avatarClass: "bg-violet-300 text-canvas",
+    topLine: "from-transparent via-violet-300/60 to-transparent",
+    glowShadow: "rgba(163,102,255,0.15)",
   },
 ];
 
@@ -57,7 +57,7 @@ export function Testimonials() {
             <p className="text-[12px] font-medium tracking-[0.10em] text-muted uppercase mb-3">
               What clients say
             </p>
-            <h2 className="text-display-xl font-bold tracking-display-xl leading-display-section text-ink">
+            <h2 className="text-display-xl font-display font-bold uppercase tracking-display-xl leading-display-section text-ink">
               Trusted by teams
               <br />
               that ship.
@@ -134,7 +134,7 @@ export function Testimonials() {
 
                 <div className="relative px-7 py-5 flex items-center gap-3">
                   <div
-                    className={`w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0 transition-transform duration-300 group-hover:scale-110 ${avatarClass}`}
+                    className={`w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold shrink-0 transition-transform duration-300 group-hover:scale-110 ${avatarClass}`}
                   >
                     {initials}
                   </div>

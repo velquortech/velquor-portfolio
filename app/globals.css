@@ -1,12 +1,23 @@
 @import "tailwindcss";
 
-/* ── Theme variables (dark only — the brand ships no light mode) ── */
+/* ── Theme variables ── */
+/* Palette is the Velquor identity hand-off (Fasciol, 2026-07-18). One violet
+   ramp, no second hue. Values sampled from the brand boards — see
+   .claude/BRAND-PARITY.md §1.2 and .claude/brand-reference/palette-scale.png. */
 :root {
   color-scheme: dark;
 
-  --canvas:          #0b0b0b;
-  --s1:              #161616;
-  --s2:              #1e1e1e;
+  /* Brand ramp — the whole chromatic system */
+  --violet-900: #140033;
+  --violet-700: #3d0099;
+  --violet-500: #6600ff;  /* PRIMARY — fill only, never body text */
+  --violet-300: #a366ff;  /* the on-dark voice: links, accents, glow tint */
+  --violet-100: #efe5ff;
+
+  /* Surfaces — near-black carries a violet cast, it is not neutral */
+  --canvas:          #06000f;
+  --s1:              #0e0024;  /* INFERRED from mockup cards — pending sign-off */
+  --s2:              var(--violet-900);
   --ink:             #ffffff;
   --muted:           #999999;
 
@@ -17,10 +28,9 @@
   --hairline-active: rgba(255,255,255,0.18);
 
   --dot-color:    rgba(255,255,255,0.07);
-  --circuit-clr:  white;
-  --nav-blur-bg:  rgba(11,11,11,0.92);
-  --fade-color:   #0b0b0b;
-  --card-s1-fade: #161616;
+  --nav-blur-bg:  rgba(6,0,15,0.92);
+  --fade-color:   #06000f;
+  --card-s1-fade: #0e0024;
 }
 
 /* ── Design tokens ── */
@@ -30,15 +40,19 @@
   --color-s2:      var(--s2);
   --color-ink:     var(--ink);
   --color-muted:   var(--muted);
-  --color-accent:  #0099ff;
-  --color-success: #22c55e;
-  --color-violet:  #7c3aed;
-  --color-magenta: #db2777;
-  --color-orange:  #ea580c;
-  --color-coral:   #e11d48;
-  --color-indigo:  #6366f1;
 
-  --font-sans: var(--font-inter), "Inter", system-ui, sans-serif;
+  --color-violet-900: var(--violet-900);
+  --color-violet-700: var(--violet-700);
+  --color-violet-500: var(--violet-500);
+  --color-violet-300: var(--violet-300);
+  --color-violet-100: var(--violet-100);
+
+  /* violet-500 fills, violet-300 speaks — accent is text, so it is the 300 */
+  --color-accent:  var(--violet-300);
+  --color-success: #22c55e;
+
+  --font-sans:    var(--font-inter), "Inter", system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), "Space Grotesk", system-ui, sans-serif;
 
   --radius-card:      20px;
   --radius-spotlight: 30px;
@@ -58,17 +72,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-::selection { background-color: rgba(0,153,255,0.25); }
+::selection { background-color: rgba(102,0,255,0.30); }
 
+/* violet-300 at full opacity, 2px — the old 1px at 50% alpha sat near 2.8:1
+   against canvas, under the 3:1 WCAG needs for a focus indicator. This is
+   5.51:1. */
 a:focus-visible,
-button:focus-visible {
-  outline: 1px solid rgba(0,153,255,0.5);
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--violet-300);
   outline-offset: 2px;
 }
-
-/* ── Circuit SVG theming ── */
-#circuit-bg path { stroke: var(--circuit-clr); fill: none; }
-#circuit-bg circle, #circuit-bg rect { fill: var(--circuit-clr); }
 
 /* ── Keyframes ── */
 @keyframes scroll-up {
@@ -103,69 +120,74 @@ button:focus-visible {
   .bg-hairline            { background-color: var(--hairline); }
   .bg-hairline-md         { background-color: var(--hairline-md); }
 
-  /* Display typography */
-  .text-display-xxl { font-size: clamp(52px, 9vw, 110px); }
-  .text-display-xl  { font-size: clamp(36px, 5vw, 72px);  }
-  .text-display-lg  { font-size: clamp(28px, 3.5vw, 42px); }
-  .text-display-md  { font-size: clamp(22px, 2.5vw, 32px); }
+  /* Display typography — Space Grotesk Bold, set uppercase.
+     Sizes sit below the old Inter ramp on purpose: uppercase Space Grotesk
+     runs ~25% wider per character than the tight-tracked mixed-case Inter it
+     replaces, so the previous 110px hero overran its column once set in caps. */
+  .text-display-xxl { font-size: clamp(38px, 6.5vw, 80px); }
+  .text-display-xl  { font-size: clamp(28px, 4vw,   58px); }
+  .text-display-lg  { font-size: clamp(21px, 2.6vw, 32px); }
+  .text-display-md  { font-size: clamp(20px, 2.3vw, 28px); }
 
-  /* Letter-spacing */
-  .tracking-display-xxl  { letter-spacing: clamp(-3px,   -0.05em, -5.5px); }
-  .tracking-display-xl   { letter-spacing: clamp(-2px,   -0.05em, -4px);   }
-  .tracking-display-hero { letter-spacing: clamp(-2.5px, -0.05em, -4.5px); }
-  .tracking-display-lg   { letter-spacing: clamp(-1.5px, -0.04em, -2.5px); }
+  /* Letter-spacing. The old scale pulled to -0.05em, which was the Framer
+     study's signature, not Velquor's — the hand-off sets display at neutral
+     to slightly open. */
+  .tracking-display-xxl  { letter-spacing: 0;        }
+  .tracking-display-xl   { letter-spacing: 0;        }
+  .tracking-display-hero { letter-spacing: 0;        }
+  .tracking-display-lg   { letter-spacing: 0.005em;  }
+  .tracking-display-md   { letter-spacing: 0.01em;   }
 
-  /* Line-heights */
-  .leading-display         { line-height: 0.88; }
-  .leading-display-tight   { line-height: 0.92; }
-  .leading-display-section { line-height: 0.95; }
-  .leading-display-card    { line-height: 1.06; }
+  /* Line-heights — caps need more room than tight-set lowercase */
+  .leading-display         { line-height: 1.02; }
+  .leading-display-tight   { line-height: 1.04; }
+  .leading-display-section { line-height: 1.05; }
+  .leading-display-card    { line-height: 1.08; }
 
   /* Gradient text */
   .text-gradient-hero {
-    background: linear-gradient(95deg, #ffffff 0%, #e0d4ff 40%, #f9a8d4 75%, #ffffff 100%);
+    background: linear-gradient(95deg, #ffffff 0%, #efe5ff 40%, #a366ff 75%, #ffffff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .text-gradient-palette {
-    background: linear-gradient(95deg, #a78bfa 0%, #f472b6 50%, #fb923c 100%);
+    background: linear-gradient(95deg, #a366ff 0%, #6600ff 50%, #efe5ff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   /* Section atmosphere backgrounds */
+  /* One bloom, one hue, from the top — the hand-off's "violet dome". The old
+     four-orb mesh rotated through four hues and is gone with the brand. */
   .bg-hero-mesh {
     background:
-      radial-gradient(ellipse 80% 60% at 15% 40%, rgba(109,40,217,0.13) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(219,39,119,0.10) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 45% at 75% 85%, rgba(234,88,12,0.09)  0%, transparent 55%),
-      radial-gradient(ellipse 40% 40% at 5%  85%, rgba(225,29,72,0.08)  0%, transparent 55%);
+      radial-gradient(ellipse 90% 55% at 50% 0%,  rgba(102,0,255,0.22) 0%, rgba(61,0,153,0.10) 45%, transparent 72%),
+      radial-gradient(ellipse 60% 45% at 50% 12%, rgba(163,102,255,0.10) 0%, transparent 60%);
   }
   .bg-services-mesh {
     background:
-      radial-gradient(ellipse 55% 40% at 10% 50%, rgba(124,58,237,0.07) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 35% at 90% 60%, rgba(234,88,12,0.06)  0%, transparent 60%);
+      radial-gradient(ellipse 55% 40% at 10% 50%, rgba(102,0,255,0.07)   0%, transparent 60%),
+      radial-gradient(ellipse 40% 35% at 90% 60%, rgba(163,102,255,0.05) 0%, transparent 60%);
   }
 
-  /* Spotlight card backgrounds */
+  /* Spotlight card backgrounds — variants differ by luminance and origin, not
+     by hue. Everything walks the one ramp. */
   .bg-spotlight-violet {
-    background: radial-gradient(ellipse at 70% 30%, #7c3aed 0%, #4c1d95 38%, #1a0638 70%, var(--fade-color) 100%);
+    background: radial-gradient(ellipse at 70% 30%, #6600ff 0%, #3d0099 38%, #140033 70%, var(--fade-color) 100%);
   }
-  .bg-spotlight-orange {
-    background: radial-gradient(ellipse at 35% 75%, #ea580c 0%, #7c2d12 38%, #2a0e04 70%, var(--fade-color) 100%);
+  .bg-spotlight-violet-soft {
+    background: radial-gradient(ellipse at 35% 75%, #a366ff 0%, #6600ff 38%, #140033 70%, var(--fade-color) 100%);
   }
   .bg-spotlight-cta {
-    background: radial-gradient(ellipse at 70% 30%, #6d28d9 0%, #3b1070 35%, #150724 65%, #0b0b0b 100%);
+    background: radial-gradient(ellipse at 70% 30%, #6600ff 0%, #3d0099 35%, #140033 65%, var(--fade-color) 100%);
   }
 
-  /* Orb glows */
-  .bg-orb-violet  { background: radial-gradient(circle, rgba(124,58,237,0.22) 0%, transparent 65%); }
-  .bg-orb-magenta { background: radial-gradient(circle, rgba(219,39,119,0.18) 0%, transparent 65%); }
-  .bg-orb-orange  { background: radial-gradient(circle, rgba(234,88,12,0.15)  0%, transparent 65%); }
-  .bg-orb-coral   { background: radial-gradient(circle, rgba(225,29,72,0.12)  0%, transparent 65%); }
-  .bg-orb-cta     { background: radial-gradient(circle, rgba(124,58,237,0.25) 0%, transparent 70%); }
+  /* Orb glows — one hue. The magenta/orange/coral variants went with the
+     four-orb hero mesh they existed to serve. */
+  .bg-orb-violet { background: radial-gradient(circle, rgba(102,0,255,0.22) 0%, transparent 65%); }
+  .bg-orb-cta    { background: radial-gradient(circle, rgba(102,0,255,0.25) 0%, transparent 70%); }
 
   /* Gradient fades — use canvas CSS variable */
   .bg-fade-down { background: linear-gradient(to bottom, var(--fade-color) 0%, transparent 100%); }
@@ -176,68 +198,56 @@ button:focus-visible {
 
   /* Spotlight card image texture overlay */
   .bg-spotlight-texture {
-    background: linear-gradient(to bottom, transparent 0%, rgba(11,11,11,0.55) 100%);
+    background: linear-gradient(to bottom, transparent 0%, rgba(6,0,15,0.55) 100%);
   }
 
   /* Preview window tints inside spotlight cards */
-  .bg-preview-violet { background: rgba(109,40,217,0.22); }
-  .bg-preview-orange { background: rgba(234,88,12,0.22);  }
+  .bg-preview-violet      { background: rgba(102,0,255,0.22);   }
+  .bg-preview-violet-soft { background: rgba(163,102,255,0.22); }
 
-  /* Corner palette overlays for service cards */
-  .bg-corner-magenta { background: radial-gradient(ellipse at 100% 0%, rgba(219,39,119,0.22) 0%, transparent 65%); }
-  .bg-corner-coral   { background: radial-gradient(ellipse at 100% 0%, rgba(225,29,72,0.20)  0%, transparent 65%); }
-  .bg-corner-indigo  { background: radial-gradient(ellipse at 100% 0%, rgba(99,102,241,0.20)  0%, transparent 65%); }
-  .bg-corner-orange  { background: radial-gradient(ellipse at 100% 0%, rgba(234,88,12,0.18)   0%, transparent 65%); }
-  .bg-corner-violet  { background: radial-gradient(ellipse at 100% 0%, rgba(124,58,237,0.22)  0%, transparent 65%); }
+  /* Corner overlay for service cards — one variant. Cards are told apart by
+     icon and copy, not by hue. */
+  .bg-corner-violet { background: radial-gradient(ellipse at 100% 0%, rgba(102,0,255,0.22) 0%, transparent 65%); }
 
-  /* Project card header gradients */
-  .bg-project-meridian { background: linear-gradient(135deg, #4c1d95 0%, #1e1b4b 50%, #0b0b0b 100%); }
-  .bg-project-hrmis    { background: linear-gradient(135deg, #0e3a5f 0%, #0a1f33 50%, #0b0b0b 100%); }
-  .bg-project-orbis    { background: linear-gradient(135deg, #0c4a6e 0%, #0f172a 50%, #0b0b0b 100%); }
-  .bg-project-nfa      { background: linear-gradient(135deg, #14532d 0%, #0a2417 50%, #0b0b0b 100%); }
-  .bg-project-pulse    { background: linear-gradient(135deg, #7c2d12 0%, #1c0a03 50%, #0b0b0b 100%); }
-  .bg-project-helix    { background: linear-gradient(135deg, #831843 0%, #1e0a14 50%, #0b0b0b 100%); }
-  .bg-project-ridelink { background: linear-gradient(135deg, #0d5c63 0%, #0a2a2e 50%, #0b0b0b 100%); }
-  .bg-project-tanimbes { background: linear-gradient(135deg, #047857 0%, #1c3a16 50%, #0b0b0b 100%); }
-  .bg-project-pickleball { background: linear-gradient(135deg, #4d7c0f 0%, #14261f 50%, #0b0b0b 100%); }
+  /* Project card header gradients.
+     Three depths of the one ramp, cycled by position so neighbouring cards
+     separate. Replaces nine per-project hues (green, teal, blue, rose, …) that
+     each imported a foreign colour family into the grid. Named by depth, not
+     by project, so adding a project never means inventing a colour. */
+  .bg-project-bright { background: linear-gradient(135deg, #a366ff 0%, #3d0099 50%, #06000f 100%); }
+  .bg-project-mid    { background: linear-gradient(135deg, #6600ff 0%, #140033 50%, #06000f 100%); }
+  .bg-project-deep   { background: linear-gradient(135deg, #3d0099 0%, #140033 50%, #06000f 100%); }
 
-  /* Glow accent dots */
-  .glow-magenta { background: #db2777; box-shadow: 0 0 12px 2px rgba(219,39,119,0.33); }
-  .glow-coral   { background: #e11d48; box-shadow: 0 0 12px 2px rgba(225,29,72,0.33);  }
-  .glow-indigo  { background: #6366f1; box-shadow: 0 0 12px 2px rgba(99,102,241,0.33); }
-  .glow-orange  { background: #ea580c; box-shadow: 0 0 12px 2px rgba(234,88,12,0.33);  }
+  /* Glow accent dot */
+  .glow-violet { background: #6600ff; box-shadow: 0 0 12px 2px rgba(102,0,255,0.33); }
 
   /* Spotlight card borders with glow */
   .border-violet-glow {
-    border: 1px solid rgba(124,58,237,0.20);
-    box-shadow: 0 0 40px -10px rgba(124,58,237,0.40);
+    border: 1px solid rgba(102,0,255,0.20);
+    box-shadow: 0 0 40px -10px rgba(102,0,255,0.40);
   }
-  .border-orange-glow {
-    border: 1px solid rgba(234,88,12,0.20);
-    box-shadow: 0 0 40px -10px rgba(234,88,12,0.40);
+  .border-violet-soft-glow {
+    border: 1px solid rgba(163,102,255,0.20);
+    box-shadow: 0 0 40px -10px rgba(163,102,255,0.40);
   }
 
-  /* Tech badge pills */
-  .badge-magenta { color: #db2777; background: rgba(219,39,119,0.09); border: 1px solid rgba(219,39,119,0.20); }
-  .badge-coral   { color: #e11d48; background: rgba(225,29,72,0.09);  border: 1px solid rgba(225,29,72,0.18);  }
-  .badge-indigo  { color: #6366f1; background: rgba(99,102,241,0.09); border: 1px solid rgba(99,102,241,0.18); }
-  .badge-orange  { color: #ea580c; background: rgba(234,88,12,0.09);  border: 1px solid rgba(234,88,12,0.18);  }
-  .badge-violet  { color: #a78bfa; background: rgba(124,58,237,0.09); border: 1px solid rgba(124,58,237,0.22); }
-  .badge-success { color: #22c55e; background: rgba(34,197,94,0.08);  border: 1px solid rgba(34,197,94,0.20);  }
+  /* Tech badge pills.
+     Label is always violet-300 — 5.51:1 on canvas. The old hue-coded labels
+     (#db2777, #ea580c, #6366f1) all sat under 4.5:1 and failed AA. */
+  .badge-violet  { color: #a366ff; background: rgba(102,0,255,0.09); border: 1px solid rgba(102,0,255,0.22); }
+  .badge-success { color: #22c55e; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.20); }
 
   /* Gradient border on stats row */
   .border-t-gradient-palette {
     border-top: 1px solid transparent;
-    border-image: linear-gradient(to right, rgba(124,58,237,0.5), rgba(219,39,119,0.4), rgba(234,88,12,0.3)) 1;
+    border-image: linear-gradient(to right, rgba(102,0,255,0.55), rgba(163,102,255,0.40), rgba(239,229,255,0.20)) 1;
   }
 
   /* Gradient horizon line */
   .bg-horizon-gradient {
     background: linear-gradient(to right,
       transparent 0%,
-      rgba(124,58,237,0.4) 25%,
-      rgba(219,39,119,0.4) 50%,
-      rgba(234,88,12,0.4) 75%,
+      rgba(102,0,255,0.45) 50%,
       transparent 100%);
   }
 
