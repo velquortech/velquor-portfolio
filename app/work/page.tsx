@@ -122,7 +122,7 @@ export default function WorkPage() {
           )}
         </div>
 
-        <CTABand />
+        <CTABand sourcePage="/work" />
       </main>
       <Footer />
     </>

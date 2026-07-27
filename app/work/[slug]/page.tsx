@@ -281,7 +281,8 @@ export default async function ProjectPage({
         </article>
        </LightboxProvider>
 
-        <CTABand />
+        {/* Leads from a case study arrive tagged with what they were reading. */}
+        <CTABand sourcePage={`/work/${project.slug}`} interestedIn={project.name} />
       </main>
       <Footer />
     </>

@@ -1,4 +1,4 @@
-// Generates the 1200x630 Open Graph share image for Velquor.
+// Generates the 1200x630 Open Graph share images for Velquor.
 //
 // Brand: canvas #06000f, a single violet dome glow, the chevron mark, and the
 // stepped-bar field. Type is Space Grotesk Bold (the identity's display face),
@@ -31,7 +31,6 @@ const sharp = require("sharp");
 const W = 1200;
 const H = 630;
 const logoPath = path.join(root, "public/images/velq-logo-white.png");
-const outPath = path.join(root, "public/images/og-image.png");
 
 const DISPLAY = "Space Grotesk";
 const CANVAS = "#06000f";
@@ -41,6 +40,18 @@ const VIOLET_100 = "#efe5ff";
 
 const TAGLINE = "SYSTEMS CRAFTED TO GROW. PARTNERSHIPS BUILT TO STAY.";
 const DOMAIN = "velquortech.com";
+
+/** One entry per share image. Same lockup and atmosphere; only the type changes. */
+const VARIANTS = [
+  { file: "og-image.png", tagline: TAGLINE, footer: DOMAIN },
+  {
+    file: "og-contact.png",
+    kicker: "START A PROJECT",
+    tagline: "TELL US WHAT YOU ARE BUILDING.",
+    sub: "A REPLY WITHIN ONE BUSINESS DAY. NO SALES PITCH.",
+    footer: "velquortech.com/contact",
+  },
+];
 
 // Lockup geometry — mark left, wordmark to its right.
 const MARK_H = 132;
@@ -63,7 +74,7 @@ function stepBars({ rows = 15, depth = 0.62, width = 520, height = H }) {
   }).join("\n    ");
 }
 
-const svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+const buildSvg = ({ kicker, tagline, sub, footer }) => `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <radialGradient id="dome" cx="50%" cy="0%" r="78%">
       <stop offset="0%"   stop-color="${VIOLET_500}" stop-opacity="0.38"/>
@@ -107,30 +118,48 @@ const svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http
 
   <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" fill="none" stroke="#ffffff" stroke-opacity="0.06"/>
 
+  ${
+    kicker
+      ? `<text x="${MARK_LEFT}" y="196" font-family="${DISPLAY}" font-size="20" font-weight="700"
+        letter-spacing="3.2" fill="${VIOLET_300}">${kicker}</text>`
+      : ""
+  }
+
   <!-- Wordmark. Approximated in the display face: the real wordmark is set in
        GC North Sans and only exists inside the logo artwork. Swap this for the
        designer's full lockup SVG when it lands. -->
   <text x="${TEXT_X}" y="342" font-family="${DISPLAY}" font-size="96" font-weight="700"
         letter-spacing="0" fill="#ffffff">VELQUOR</text>
 
-  <!-- Primary tagline -->
+  <!-- Primary tagline, or the page's own line -->
   <text x="${MARK_LEFT}" y="446" font-family="${DISPLAY}" font-size="23" font-weight="500"
-        letter-spacing="1.2" fill="${VIOLET_300}">${TAGLINE}</text>
+        letter-spacing="1.2" fill="${VIOLET_300}">${tagline}</text>
+
+  ${
+    sub
+      ? `<text x="${MARK_LEFT}" y="486" font-family="${DISPLAY}" font-size="20" font-weight="500"
+        letter-spacing="0.9" fill="#8f8f8f">${sub}</text>`
+      : ""
+  }
 
   <text x="${MARK_LEFT}" y="556" font-family="${DISPLAY}" font-size="24" font-weight="500"
-        letter-spacing="0.6" fill="#8f8f8f">${DOMAIN}</text>
+        letter-spacing="0.6" fill="#8f8f8f">${footer}</text>
 </svg>`;
 
 (async () => {
   const logo = await sharp(logoPath).resize({ height: MARK_H }).toBuffer();
 
-  await sharp(Buffer.from(svg))
-    .composite([{ input: logo, left: MARK_LEFT, top: MARK_TOP }])
-    .png()
-    .toFile(outPath);
+  for (const variant of VARIANTS) {
+    const outPath = path.join(root, "public/images", variant.file);
 
-  const { size } = fs.statSync(outPath);
-  console.log(`Wrote ${outPath} (${(size / 1024).toFixed(1)} KB, ${W}x${H})`);
+    await sharp(Buffer.from(buildSvg(variant)))
+      .composite([{ input: logo, left: MARK_LEFT, top: MARK_TOP }])
+      .png()
+      .toFile(outPath);
+
+    const { size } = fs.statSync(outPath);
+    console.log(`Wrote ${outPath} (${(size / 1024).toFixed(1)} KB, ${W}x${H})`);
+  }
 })().catch((e) => {
   console.error(e);
   process.exit(1);

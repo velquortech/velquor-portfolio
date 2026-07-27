@@ -48,9 +48,9 @@ const COLS = [
         label: "velquortechnologies@gmail.com",
         href: "mailto:velquortechnologies@gmail.com",
       },
-      { label: "Start a project", href: "#contact" },
-      { label: "Request a quote", href: "#contact" },
-      { label: "Schedule a call", href: "#contact" },
+      { label: "Start a project", href: "/contact" },
+      { label: "Request a quote", href: "/contact" },
+      { label: "Schedule a call", href: "/contact" },
     ],
   },
   {

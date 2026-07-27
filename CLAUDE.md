@@ -108,7 +108,7 @@ All custom utilities live in `app/globals.css` under `@layer utilities`.
 
 Two scripts render brand art. Both vendor Space Grotesk from `scripts/fonts/` via a scratch fontconfig, so they do not depend on the font being installed system-wide.
 
-- `node scripts/generate-og.js` → `public/images/og-image.png` (1200×630)
+- `node scripts/generate-og.js` → `public/images/og-image.png` and `public/images/og-contact.png` (1200×630 each). One `VARIANTS` entry per share card — same lockup and atmosphere, only the type changes.
 - `node scripts/generate-icons.js` → `app/icon.png`, `app/apple-icon.png`, `app/favicon.ico`, `public/images/favicon.ico`
 
 Icons come from the `app/` file conventions — do **not** also declare `metadata.icons` in `layout.tsx`, or the tags duplicate.

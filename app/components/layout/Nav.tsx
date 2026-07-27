@@ -8,7 +8,9 @@ const LINKS = [
   { label: "Services", href: "/#services" },
   { label: "Work",     href: "/#work"     },
   { label: "Process",  href: "/#process"  },
-  { label: "Contact",  href: "/#contact"  },
+  // The real page, not the in-page band — the band is a section, /contact is
+  // an address you can put in an ad or a signature.
+  { label: "Contact",  href: "/contact"   },
 ];
 
 function HamburgerIcon() {
@@ -75,7 +77,7 @@ export function Nav() {
         <div className="flex items-center gap-3 ml-auto">
           {/* Desktop CTA */}
           <Link
-            href="/#contact"
+            href="/contact"
             className="hidden md:inline-flex items-center gap-1.5 bg-violet-500 text-white hover:bg-violet-700 transition-colors duration-200 px-[18px] py-2 rounded-pill text-[14px] font-semibold tracking-[-0.14px] no-underline"
           >
             Get in touch
@@ -112,7 +114,7 @@ export function Nav() {
             </a>
           ))}
           <Link
-            href="/#contact"
+            href="/contact"
             onClick={() => setOpen(false)}
             className="inline-block mt-5 bg-violet-500 text-white hover:bg-violet-700 transition-colors duration-200 px-[22px] py-[10px] rounded-pill text-[14px] font-semibold no-underline"
           >
