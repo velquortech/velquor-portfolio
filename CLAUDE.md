@@ -104,6 +104,35 @@ All custom utilities live in `app/globals.css` under `@layer utilities`.
 - Address: Taft Street, Barangay Zone IV (Pob.), Santa Barbara, Iloilo, Region VI (Western Visayas), 5002.
 - The phone number on the hand-off business card (`+63 912 345 6789`) is **placeholder digits — do not ship it**.
 
+## Contact capture
+
+Every CTA on the site funnels into one Server Action that writes a row to Airtable. Before this existed the buttons were `mailto:` links, which silently did nothing on mobile and left no record — do not reintroduce a `mailto:`-only path as the sole contact route.
+
+**The path:** `ContactForm` → `submitContact` (Server Action) → `createLead` → Airtable REST.
+
+| File | Role |
+| --- | --- |
+| `app/lib/airtable.ts` | Server-only `fetch` wrapper. One endpoint does not justify an SDK |
+| `app/lib/contact-options.ts` | Select choices, length caps, the honeypot name, and the action's state type |
+| `app/actions/contact.ts` | `"use server"`, `(prevState, formData)` per `useActionState` |
+| `app/components/contact/ContactForm.tsx` | Client Component. Props: `sourcePage`, `interestedIn?`, `defaultSegment?` |
+
+**Placements** — `CTABand` (homepage, `/work`, and every project page) and the `/contact` page. `CTABand` takes `sourcePage` and `interestedIn`; project pages pass the case-study name so warm leads arrive tagged. `/contact` does **not** render `CTABand` — the band *is* the form, so it would appear twice.
+
+### Rules
+
+- **`AIRTABLE_TOKEN` must never be `NEXT_PUBLIC_`.** A client-exposed Airtable token is a public write handle on the base. `import "server-only"` at the top of `app/lib/airtable.ts` is the guardrail — leave it there.
+- Scope the runtime token to the one base with `data.records:write`. It never needs schema scopes; provisioning is a separate, short-lived credential.
+- **Never return Airtable's error body to the client.** It echoes field and table names. Log it server-side and surface a generic message.
+- **The select choices are duplicated by design** — once in `contact-options.ts`, once in the Airtable table. Change one and you must change the other. The write uses `typecast: true`, so a mismatch does not error; it silently coerces or drops the value.
+- Every select value is whitelisted in the action before it is sent, so a hand-crafted POST cannot seed new choices into the Airtable field.
+- The form must keep working with JavaScript disabled. It is a real `<form action={formAction}>` and context travels as hidden inputs — do not convert it to an `onSubmit` handler.
+- The honeypot (`website`) returns the *success* shape, not an error. A bot that learns it was caught adapts.
+
+**Runtime env** — `AIRTABLE_TOKEN`, `AIRTABLE_BASE_ID`, `AIRTABLE_TABLE`. Documented in `.env.example`; `.env*` is gitignored. `scripts/setup-airtable.js` provisions the `Leads` schema idempotently and prints the ids.
+
+**Brand note** — the submit button is a violet pill even inside `CTABand`. The white-pill inversion applies to elements sitting *on* the violet ground; this button sits on the form's `s1` card. The band's secondary `mailto:` link, which is on the violet ground, does invert.
+
 ## Generated assets
 
 Two scripts render brand art. Both vendor Space Grotesk from `scripts/fonts/` via a scratch fontconfig, so they do not depend on the font being installed system-wide.
@@ -132,6 +161,7 @@ Icons come from the `app/` file conventions — do **not** also declare `metadat
 - Don't hue-code sibling items (service cards, tech badges, project headers). Differentiate by icon, copy, or ramp depth.
 - Don't add a hue-named utility (`glow-magenta`, `bg-corner-orange`, …). Those names existed and were deleted.
 - Don't ship the placeholder phone number.
+- Don't prefix any Airtable variable with `NEXT_PUBLIC_`, and don't add a select choice on one side of `contact-options.ts` / the Airtable table without the other.
 
 ## Known gaps
 
