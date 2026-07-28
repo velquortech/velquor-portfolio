@@ -1,31 +1,13 @@
-const STEPS = [
-  {
-    num: "01",
-    title: "Discover",
-    desc: "We learn your domain, your users, and your real constraints — before writing a single line of code.",
-  },
-  {
-    num: "02",
-    title: "Architect",
-    desc: "We design systems that solve today's problems without creating tomorrow's technical debt.",
-  },
-  {
-    num: "03",
-    title: "Engineer",
-    desc: "Two-week sprints with working software every cycle. Full transparency, no black-box development.",
-  },
-  {
-    num: "04",
-    title: "QA & Review",
-    desc: "Automated test coverage, peer code reviews, and performance audits before every release.",
-  },
-  {
-    num: "05",
-    title: "Scale & Support",
-    desc: "We stand by our work post-launch — monitoring, optimizing, and growing with your product.",
-  },
-];
+import Link from "next/link";
+import { PHASES } from "../../../data/process";
 
+/**
+ * The landing-page cut of the process: the five step names and their
+ * one-liners, and a link into `/process` for the detail.
+ *
+ * The steps live in `app/data/process.ts` so this section and `/process`
+ * cannot disagree about what step 03 is called.
+ */
 export function Process() {
   return (
     <section id="process" className="relative py-24">
@@ -51,7 +33,7 @@ export function Process() {
         </div>
 
         <div>
-          {STEPS.map((step) => (
+          {PHASES.map((step) => (
             <div
               key={step.num}
               className="group relative flex flex-col gap-3 md:flex-row md:items-start md:gap-8 py-8 border-b border-hairline last:border-0 pl-4"
@@ -72,10 +54,23 @@ export function Process() {
               </div>
 
               <p className="flex-1 text-[15px] leading-[1.6] tracking-[-0.15px] text-muted">
-                {step.desc}
+                {step.summary}
               </p>
             </div>
           ))}
+        </div>
+
+        {/* The detail lives on its own page — what each phase produces, and the
+            principles that hold across all five. A visitor who never clicks
+            still leaves knowing we work in five named steps. */}
+        <div className="mt-10">
+          <Link
+            href="/process"
+            className="inline-flex items-center gap-2 bg-s1 border border-hairline-strong hover:border-hairline-hover transition-colors duration-200 text-ink px-[22px] py-[11px] rounded-pill text-[14px] font-medium tracking-[-0.14px] no-underline"
+          >
+            See the full process
+            <span aria-hidden>→</span>
+          </Link>
         </div>
       </div>
 
