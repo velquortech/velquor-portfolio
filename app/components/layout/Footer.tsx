@@ -32,14 +32,14 @@ const COLS = [
   },
   {
     title: "Company",
+    // About, Careers, and Blog were `href="#"` — dead jumps to the top of
+    // whatever page you were on. They come back when there is a page behind
+    // them, not before.
     links: [
-      { label: "About", href: "#" },
       { label: "Work", href: "/work" },
       // A real route, not an anchor. `#process` resolved against whatever page
       // you were on, so from /work or /contact it went nowhere.
       { label: "Process", href: "/process" },
-      { label: "Careers", href: "#" },
-      { label: "Blog", href: "#" },
     ],
   },
   {
@@ -51,15 +51,8 @@ const COLS = [
       },
       { label: "Start a project", href: "/contact" },
       { label: "Request a quote", href: "/contact" },
-      { label: "Schedule a call", href: "/contact" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { label: "Privacy Policy", href: "#" },
-      { label: "Terms of Service", href: "#" },
-      { label: "Cookie Policy", href: "#" },
+      // Goes to the booking page now that one exists.
+      { label: "Schedule a call", href: "/book" },
     ],
   },
 ];
@@ -165,7 +158,7 @@ export function Footer() {
       </div>
 
       <style>{`
-        .footer-grid { grid-template-columns: 1.5fr repeat(4, 1fr); }
+        .footer-grid { grid-template-columns: 1.5fr repeat(3, 1fr); }
         @media (max-width: 900px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
       `}</style>

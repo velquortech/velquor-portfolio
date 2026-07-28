@@ -5,10 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 
 const LINKS = [
+  // The logo goes home too, but that is a convention people have to know. On a
+  // deep page — a case study, /book — a named link is the obvious way back.
+  { label: "Home",     href: "/"          },
   // Replaces the old "/#services" anchor. A real route, and the nav is already
   // at five items plus a CTA — this swaps rather than adds.
   { label: "Solutions", href: "/solutions" },
-  { label: "Work",     href: "/#work"     },
+  // The real page, not the homepage section. As "/#work" it resolved against
+  // whatever page you were on, so from /contact or /solutions it went nowhere.
+  { label: "Work",     href: "/work"      },
   { label: "Process",  href: "/process"   },
   // The real page, not the in-page band — the band is a section, /contact is
   // an address you can put in an ad or a signature.
@@ -55,7 +60,7 @@ export function Nav() {
       <div className="mx-auto flex items-center h-full px-6 max-w-[1200px]">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center no-underline mr-10 shrink-0" aria-label="Velquor home">
+        <Link href="/" className="flex items-center no-underline mr-6 lg:mr-10 shrink-0" aria-label="Velquor home">
           <Image
             src="/images/velq-logo-white.png"
             alt="Velquor"
@@ -67,7 +72,9 @@ export function Nav() {
         </Link>
 
         {/* Desktop links */}
-        <nav className="hidden md:flex flex-1 gap-8">
+        {/* Six links plus the CTA is a lot for the md breakpoint — the gap
+            tightens there and opens back up at lg. */}
+        <nav className="hidden md:flex flex-1 gap-5 lg:gap-8">
           {LINKS.map(({ label, href }) => (
             <a
               key={label}

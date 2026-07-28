@@ -428,6 +428,22 @@ export function ContactForm({
           We reply within one business day.
         </span>
       </div>
+
+      {/* The honest version of a privacy notice: what is collected, where it
+          goes, and how to undo it. Stands in for a policy page until there is a
+          reason to write one — a client's procurement checklist, ads, or EU
+          traffic. Keep it accurate if the contact path ever changes. */}
+      <p className="text-[12px] leading-[1.55] text-white/40 tracking-[-0.12px] m-0">
+        What you send goes to Airtable, where we read it and reply. We
+        don&apos;t add you to a mailing list.{" "}
+        <a
+          href="mailto:velquortechnologies@gmail.com?subject=Delete%20my%20enquiry"
+          className="text-white/60 hover:text-ink transition-colors duration-200"
+        >
+          Email us
+        </a>{" "}
+        to have it deleted.
+      </p>
     </form>
   );
 }
