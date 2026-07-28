@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Mail, MapPin, Clock } from "lucide-react";
+import { Mail, MapPin, Clock, CalendarCheck } from "lucide-react";
 import { Nav } from "../components/layout/Nav";
 import { Footer } from "../components/layout/Footer";
 import { ContactForm } from "../components/contact/ContactForm";
@@ -117,6 +117,20 @@ export default function ContactPage() {
                 Within <span className="text-violet-300">one business day</span>
                 , Monday to Friday. Urgent? Say so in the message and we&apos;ll
                 move it up.
+              </DetailCard>
+
+              {/* The reciprocal of the "Rather write it down" card on /book.
+                  A link, not a second embed — the form is this page's job, and
+                  two scheduling surfaces on one page split both. */}
+              <DetailCard Icon={CalendarCheck} label="Rather talk it through">
+                Skip the wait and{" "}
+                <Link
+                  href="/book"
+                  className="text-violet-300 hover:text-violet-100 transition-colors no-underline"
+                >
+                  book a 30-minute call
+                </Link>
+                . Google Meet, no commitment.
               </DetailCard>
 
               <DetailCard Icon={Mail} label="Prefer email">
