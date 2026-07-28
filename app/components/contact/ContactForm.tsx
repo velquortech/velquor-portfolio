@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useId, useSyncExternalStore } from "react";
+import { useActionState, useId, useState, useSyncExternalStore } from "react";
 import { submitContact } from "../../actions/contact";
 import {
   BUDGETS,
@@ -13,7 +13,14 @@ import {
   TIMELINES,
   type Currency,
 } from "../../lib/contact-options";
-import { COUNTRY_COOKIE, PH, readCookie } from "../../lib/geo";
+import {
+  COUNTRY_COOKIE,
+  CURRENCY_COOKIE,
+  PH,
+  localeLooksPhilippine,
+  readCookie,
+  writeCookie,
+} from "../../lib/geo";
 import { StepField } from "../brand/StepField";
 
 /**
@@ -31,33 +38,72 @@ import { StepField } from "../brand/StepField";
  * server snapshot below, so the markup React hydrates matches what was sent.
  * With JavaScript off the form still works and shows dollars.
  */
-/** Neither the cookie nor the timezone changes mid-session — nothing to subscribe to. */
+/** None of these signals change mid-session — nothing to subscribe to. */
 const subscribe = () => () => {};
 
+/**
+ * In precedence order:
+ *
+ *   1. what the visitor picked, if they picked
+ *   2. the edge's country lookup, which is the accurate one
+ *   3. timezone, then locale — fallbacks for local dev and non-Vercel hosts
+ *
+ * Timezone alone is not enough: a lot of machines in the Philippines are set to
+ * Asia/Singapore, same UTC+8. Widening the check to the offset is worse, not
+ * better — that bucket also holds Singapore, Malaysia, Hong Kong, Taiwan, and
+ * Perth. Locale is the tiebreaker, and the toggle is the answer when both are
+ * wrong.
+ */
 const getClientCurrency = (): Currency => {
+  const chosen = readCookie(CURRENCY_COOKIE);
+  if (chosen === "PHP" || chosen === "USD") return chosen;
+
   const country = readCookie(COUNTRY_COOKIE);
   if (country) return country === PH ? "PHP" : "USD";
 
   try {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone === "Asia/Manila"
-      ? "PHP"
-      : "USD";
+    if (Intl.DateTimeFormat().resolvedOptions().timeZone === "Asia/Manila") {
+      return "PHP";
+    }
   } catch {
-    // Intl is unavailable on some old browsers; dollars is the safe default.
-    return "USD";
+    // Intl is unavailable on some old browsers; fall through to locale.
   }
+
+  return localeLooksPhilippine() ? "PHP" : "USD";
 };
 
 const getServerCurrency = (): Currency => "USD";
 
-function useCurrency(): Currency {
+/**
+ * Detection sets the default; the visitor gets the last word.
+ *
+ * Every signal above is a guess, and a guess about someone's money is worth one
+ * small control to correct. The choice is remembered across pages, and it
+ * changes only what is displayed — the band posted to Airtable is the dollar
+ * band either way.
+ */
+function useCurrency(): [Currency, (next: Currency) => void] {
   // useSyncExternalStore, not an effect: it takes an explicit server snapshot,
   // so the markup React hydrates against is the markup the server sent.
-  return useSyncExternalStore(subscribe, getClientCurrency, getServerCurrency);
+  const detected = useSyncExternalStore(
+    subscribe,
+    getClientCurrency,
+    getServerCurrency,
+  );
+  const [chosen, setChosen] = useState<Currency | null>(null);
+
+  const choose = (next: Currency) => {
+    writeCookie(CURRENCY_COOKIE, next);
+    setChosen(next);
+  };
+
+  return [chosen ?? detected, choose];
 }
 
-const LABEL =
-  "block text-[11px] font-semibold tracking-[0.10em] uppercase text-white/55 mb-2";
+const LABEL_BASE =
+  "block text-[11px] font-semibold tracking-[0.10em] uppercase text-white/55";
+
+const LABEL = `${LABEL_BASE} mb-2`;
 
 const FIELD =
   "w-full bg-s2 border border-hairline-strong rounded-[10px] px-4 py-3 " +
@@ -92,7 +138,7 @@ export function ContactForm({
   );
   const id = useId();
   const field = (n: string) => `${id}-${n}`;
-  const currency = useCurrency();
+  const [currency, chooseCurrency] = useCurrency();
 
   if (state.ok) {
     return (
@@ -251,9 +297,37 @@ export function ContactForm({
         </div>
 
         <div>
-          <label htmlFor={field("budget")} className={LABEL}>
-            Budget
-          </label>
+          {/* Detection is a guess, and this one is about someone's money. The
+              toggle is the correction — plenty of machines in the Philippines
+              report Asia/Singapore, and no signal short of asking gets that
+              right. Switching changes the labels only; the posted value stays
+              the dollar band. */}
+          <div className="flex items-center justify-between gap-2 mb-2">
+            <label htmlFor={field("budget")} className={LABEL_BASE}>
+              Budget
+            </label>
+            <div
+              role="group"
+              aria-label="Show budget in"
+              className="flex items-center gap-1"
+            >
+              {(["USD", "PHP"] as const).map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() => chooseCurrency(c)}
+                  aria-pressed={currency === c}
+                  className={`px-2 py-0.5 rounded-pill border text-[11px] font-semibold tracking-[0.08em] cursor-pointer transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300 ${
+                    currency === c
+                      ? "bg-s2 border-hairline-strong text-ink"
+                      : "bg-transparent border-transparent text-white/40 hover:text-white/70"
+                  }`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+          </div>
           <select
             id={field("budget")}
             name="budget"
