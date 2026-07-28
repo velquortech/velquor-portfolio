@@ -128,7 +128,7 @@ export default function ContactPage() {
                   href="/book"
                   className="text-violet-300 hover:text-violet-100 transition-colors no-underline"
                 >
-                  book a 30-minute call
+                  book a one-hour call
                 </Link>
                 . Google Meet, no commitment.
               </DetailCard>
