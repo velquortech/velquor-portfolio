@@ -17,6 +17,7 @@ import {
   COUNTRY_COOKIE,
   CURRENCY_COOKIE,
   PH,
+  localeLooksPhilippine,
   readCookie,
   writeCookie,
 } from "../../lib/geo";
@@ -37,9 +38,22 @@ import { StepField } from "../brand/StepField";
  * server snapshot below, so the markup React hydrates matches what was sent.
  * With JavaScript off the form still works and shows dollars.
  */
-/** Neither the cookie nor the timezone changes mid-session — nothing to subscribe to. */
+/** None of these signals change mid-session — nothing to subscribe to. */
 const subscribe = () => () => {};
 
+/**
+ * In precedence order:
+ *
+ *   1. what the visitor picked, if they picked
+ *   2. the edge's country lookup, which is the accurate one
+ *   3. timezone, then locale — fallbacks for local dev and non-Vercel hosts
+ *
+ * Timezone alone is not enough: a lot of machines in the Philippines are set to
+ * Asia/Singapore, same UTC+8. Widening the check to the offset is worse, not
+ * better — that bucket also holds Singapore, Malaysia, Hong Kong, Taiwan, and
+ * Perth. Locale is the tiebreaker, and the toggle is the answer when both are
+ * wrong.
+ */
 const getClientCurrency = (): Currency => {
   // The visitor's own choice outranks every guess below it.
   const chosen = readCookie(CURRENCY_COOKIE);
@@ -49,13 +63,14 @@ const getClientCurrency = (): Currency => {
   if (country) return country === PH ? "PHP" : "USD";
 
   try {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone === "Asia/Manila"
-      ? "PHP"
-      : "USD";
+    if (Intl.DateTimeFormat().resolvedOptions().timeZone === "Asia/Manila") {
+      return "PHP";
+    }
   } catch {
-    // Intl is unavailable on some old browsers; dollars is the safe default.
-    return "USD";
+    // Intl is unavailable on some old browsers; fall through to locale.
   }
+
+  return localeLooksPhilippine() ? "PHP" : "USD";
 };
 
 const getServerCurrency = (): Currency => "USD";
@@ -86,8 +101,10 @@ function useCurrency(): [Currency, (next: Currency) => void] {
   return [chosen ?? detected, choose];
 }
 
-const LABEL =
-  "block text-[11px] font-semibold tracking-[0.10em] uppercase text-white/55 mb-2";
+const LABEL_BASE =
+  "block text-[11px] font-semibold tracking-[0.10em] uppercase text-white/55";
+
+const LABEL = `${LABEL_BASE} mb-2`;
 
 const FIELD =
   "w-full bg-s2 border border-hairline-strong rounded-[10px] px-4 py-3 " +
@@ -321,6 +338,9 @@ export function ContactForm({
         </div>
 
         <div>
+          {/* Plain label. The currency toggle lives at the top of the form —
+              in this label row it made the Budget cell taller than Project and
+              Timeline and pushed its select out of line. */}
           <label htmlFor={field("budget")} className={LABEL}>
             Budget
           </label>
