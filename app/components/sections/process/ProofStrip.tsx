@@ -68,7 +68,9 @@ export function ProofStrip() {
               <p className="text-[11px] font-semibold tracking-[0.10em] uppercase text-muted mb-2">
                 {p.category}
               </p>
-              <h3 className="text-[17px] font-display font-bold uppercase tracking-display-md leading-[1.2] text-ink mb-2">
+              {/* 20px is the floor for the display face. The card is wide
+                  enough to carry it. */}
+              <h3 className="text-[20px] font-display font-bold uppercase tracking-display-md leading-[1.2] text-ink mb-2">
                 {p.name}
               </h3>
               <p className="text-[13px] leading-[1.55] tracking-[-0.13px] text-violet-300 m-0">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useId, useSyncExternalStore } from "react";
+import { useActionState, useId, useState, useSyncExternalStore } from "react";
 import { submitContact } from "../../actions/contact";
 import {
   BUDGETS,
@@ -13,7 +13,13 @@ import {
   TIMELINES,
   type Currency,
 } from "../../lib/contact-options";
-import { COUNTRY_COOKIE, PH, readCookie } from "../../lib/geo";
+import {
+  COUNTRY_COOKIE,
+  CURRENCY_COOKIE,
+  PH,
+  readCookie,
+  writeCookie,
+} from "../../lib/geo";
 import { StepField } from "../brand/StepField";
 
 /**
@@ -35,6 +41,10 @@ import { StepField } from "../brand/StepField";
 const subscribe = () => () => {};
 
 const getClientCurrency = (): Currency => {
+  // The visitor's own choice outranks every guess below it.
+  const chosen = readCookie(CURRENCY_COOKIE);
+  if (chosen === "PHP" || chosen === "USD") return chosen;
+
   const country = readCookie(COUNTRY_COOKIE);
   if (country) return country === PH ? "PHP" : "USD";
 
@@ -50,10 +60,30 @@ const getClientCurrency = (): Currency => {
 
 const getServerCurrency = (): Currency => "USD";
 
-function useCurrency(): Currency {
+/**
+ * Detection sets the default; the visitor gets the last word.
+ *
+ * Every signal above is a guess, and this one is a guess about someone's money
+ * — plenty of machines in the Philippines report Asia/Singapore. The choice is
+ * remembered for thirty days and changes display only; the band posted to
+ * Airtable is the dollar band either way.
+ */
+function useCurrency(): [Currency, (next: Currency) => void] {
   // useSyncExternalStore, not an effect: it takes an explicit server snapshot,
   // so the markup React hydrates against is the markup the server sent.
-  return useSyncExternalStore(subscribe, getClientCurrency, getServerCurrency);
+  const detected = useSyncExternalStore(
+    subscribe,
+    getClientCurrency,
+    getServerCurrency,
+  );
+  const [chosen, setChosen] = useState<Currency | null>(null);
+
+  const choose = (next: Currency) => {
+    writeCookie(CURRENCY_COOKIE, next);
+    setChosen(next);
+  };
+
+  return [chosen ?? detected, choose];
 }
 
 const LABEL =
@@ -92,7 +122,7 @@ export function ContactForm({
   );
   const id = useId();
   const field = (n: string) => `${id}-${n}`;
-  const currency = useCurrency();
+  const [currency, chooseCurrency] = useCurrency();
 
   if (state.ok) {
     return (
@@ -140,6 +170,41 @@ export function ContactForm({
           tabIndex={-1}
           autoComplete="off"
         />
+      </div>
+
+      {/* Form-level control, so it sits above the fields instead of beside the
+          Budget label. In that label row it made the Budget cell taller than
+          Project and Timeline and knocked its select out of line. Named
+          "Budget in" because it is far enough from the field it governs that
+          the connection has to be stated. */}
+      <div className="flex items-center justify-end gap-2">
+        <span
+          id={field("currency-label")}
+          className="text-[11px] font-semibold tracking-[0.10em] uppercase text-white/40"
+        >
+          Budget in
+        </span>
+        <div
+          role="group"
+          aria-labelledby={field("currency-label")}
+          className="flex items-center gap-1"
+        >
+          {(["USD", "PHP"] as const).map((c) => (
+            <button
+              key={c}
+              type="button"
+              onClick={() => chooseCurrency(c)}
+              aria-pressed={currency === c}
+              className={`px-2.5 py-1 rounded-pill border text-[11px] font-semibold tracking-[0.08em] cursor-pointer transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300 ${
+                currency === c
+                  ? "bg-s2 border-hairline-strong text-ink"
+                  : "bg-transparent border-transparent text-white/40 hover:text-white/70"
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -230,7 +295,12 @@ export function ContactForm({
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-3">
+      {/* items-end, so the three selects sit on one line whatever happens to
+          the labels above them. A label that wraps — or that ever gains a
+          control beside it — grows its cell upward instead of pushing its
+          select down out of step with the other two. Safe here because no
+          field in this row renders an error message beneath it. */}
+      <div className="grid gap-4 sm:grid-cols-3 items-end">
         <div>
           <label htmlFor={field("projectType")} className={LABEL}>
             Project

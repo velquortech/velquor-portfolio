@@ -146,7 +146,7 @@ export function Testimonials() {
                       {role}
                     </div>
                   </div>
-                  <span className="text-[10px] tracking-[0.06em] text-muted/60 shrink-0 group-hover:text-yellow-400/70 transition-colors duration-300">
+                  <span className="text-[10px] tracking-[0.06em] text-muted/60 shrink-0 group-hover:text-violet-300/70 transition-colors duration-300">
                     ★★★★★
                   </span>
                 </div>

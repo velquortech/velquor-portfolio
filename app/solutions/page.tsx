@@ -227,7 +227,9 @@ export default function SolutionsPage() {
                   key={title}
                   className="grid gap-2 lg:gap-16 lg:grid-cols-[260px_minmax(0,1fr)] py-6 border-b border-hairline"
                 >
-                  <dt className="text-[15px] font-display font-bold uppercase tracking-display-md leading-[1.25] text-ink">
+                  {/* Inter: a 260px term column cannot carry the display face
+                      at its 20px floor without wrapping every term. */}
+                  <dt className="text-[15px] font-semibold uppercase tracking-[0.08em] leading-[1.35] text-ink">
                     {title}
                   </dt>
                   <dd className="m-0 max-w-[640px] text-[15px] leading-[1.65] tracking-[-0.15px] text-muted">

@@ -73,7 +73,9 @@ export function CapabilityMatrix() {
                     href={`/work/${p.slug}`}
                     className="block no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300"
                   >
-                    <span className="block text-[15px] font-display font-bold uppercase tracking-display-md leading-[1.2] text-ink group-hover:text-violet-300 transition-colors duration-200">
+                    {/* Inter: a table row label, and below the display face's
+                        20px floor either way. */}
+                    <span className="block text-[14px] font-semibold uppercase tracking-[0.08em] leading-[1.3] text-ink group-hover:text-violet-300 transition-colors duration-200">
                       {p.name}
                     </span>
                     <span className="block text-[12px] leading-[1.4] tracking-[-0.12px] text-muted mt-1">

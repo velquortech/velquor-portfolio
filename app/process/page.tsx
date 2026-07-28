@@ -95,7 +95,9 @@ export default function ProcessPage() {
                 <span className="block text-[12px] font-semibold tracking-[0.08em] text-gradient-palette mb-2">
                   {phase.num}
                 </span>
-                <span className="block text-[16px] font-display font-bold uppercase tracking-display-md leading-[1.2] text-ink mb-2">
+                {/* Inter, not the display face: five across leaves ~215px per
+                    card, and the display face is not set below 20px. */}
+                <span className="block text-[15px] font-semibold uppercase tracking-[0.08em] leading-[1.3] text-ink mb-2">
                   {phase.title}
                 </span>
                 <span className="block text-[13px] leading-[1.55] tracking-[-0.13px] text-muted">
@@ -135,7 +137,7 @@ export default function ProcessPage() {
                     className="absolute inset-0 bg-corner-violet pointer-events-none"
                   />
                   <div className="relative">
-                    <h3 className="text-[16px] font-display font-bold uppercase tracking-display-md leading-[1.25] text-ink mb-3">
+                    <h3 className="text-[20px] font-display font-bold uppercase tracking-display-md leading-[1.25] text-ink mb-3">
                       {title}
                     </h3>
                     <p className="text-[14px] leading-[1.6] tracking-[-0.14px] text-muted">
