@@ -1,17 +1,60 @@
 "use client";
 
-import { useActionState, useId } from "react";
+import { useActionState, useId, useSyncExternalStore } from "react";
 import { submitContact } from "../../actions/contact";
 import {
   BUDGETS,
+  BUDGET_LABELS,
   HONEYPOT,
   INITIAL_CONTACT_STATE,
   LIMITS,
   PROJECT_TYPES,
   SEGMENTS,
   TIMELINES,
+  type Currency,
 } from "../../lib/contact-options";
+import { COUNTRY_COOKIE, PH, readCookie } from "../../lib/geo";
 import { StepField } from "../brand/StepField";
+
+/**
+ * Which currency to *show* the budget bands in. The posted value never changes.
+ *
+ * Location comes from `proxy.ts`, which copies Vercel's edge geo country into a
+ * cookie. Reading it here rather than in a Server Component keeps every page
+ * statically prerendered — see the note in `proxy.ts`.
+ *
+ * The browser timezone is the fallback, for local dev and any non-Vercel host
+ * where the geo header does not exist. It is a worse signal than an IP lookup,
+ * which is why it is second.
+ *
+ * Server renders dollars; the swap happens after hydration via the explicit
+ * server snapshot below, so the markup React hydrates matches what was sent.
+ * With JavaScript off the form still works and shows dollars.
+ */
+/** Neither the cookie nor the timezone changes mid-session — nothing to subscribe to. */
+const subscribe = () => () => {};
+
+const getClientCurrency = (): Currency => {
+  const country = readCookie(COUNTRY_COOKIE);
+  if (country) return country === PH ? "PHP" : "USD";
+
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone === "Asia/Manila"
+      ? "PHP"
+      : "USD";
+  } catch {
+    // Intl is unavailable on some old browsers; dollars is the safe default.
+    return "USD";
+  }
+};
+
+const getServerCurrency = (): Currency => "USD";
+
+function useCurrency(): Currency {
+  // useSyncExternalStore, not an effect: it takes an explicit server snapshot,
+  // so the markup React hydrates against is the markup the server sent.
+  return useSyncExternalStore(subscribe, getClientCurrency, getServerCurrency);
+}
 
 const LABEL =
   "block text-[11px] font-semibold tracking-[0.10em] uppercase text-white/55 mb-2";
@@ -49,6 +92,7 @@ export function ContactForm({
   );
   const id = useId();
   const field = (n: string) => `${id}-${n}`;
+  const currency = useCurrency();
 
   if (state.ok) {
     return (
@@ -217,9 +261,10 @@ export function ContactForm({
             className={SELECT}
           >
             <option value="">Select</option>
+            {/* Value stays the canonical dollar band; only the label localises. */}
             {BUDGETS.map((b) => (
               <option key={b} value={b}>
-                {b}
+                {BUDGET_LABELS[currency][b]}
               </option>
             ))}
           </select>
