@@ -7,7 +7,7 @@ import Link from "next/link";
 const LINKS = [
   { label: "Services", href: "/#services" },
   { label: "Work",     href: "/#work"     },
-  { label: "Process",  href: "/#process"  },
+  { label: "Process",  href: "/process"   },
   // The real page, not the in-page band — the band is a section, /contact is
   // an address you can put in an ad or a signature.
   { label: "Contact",  href: "/contact"   },

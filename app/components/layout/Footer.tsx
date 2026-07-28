@@ -36,7 +36,9 @@ const COLS = [
     links: [
       { label: "About", href: "#" },
       { label: "Work", href: "/work" },
-      { label: "Process", href: "#process" },
+      // A real route, not an anchor. `#process` resolved against whatever page
+      // you were on, so from /work or /contact it went nowhere.
+      { label: "Process", href: "/process" },
       { label: "Careers", href: "#" },
       { label: "Blog", href: "#" },
     ],

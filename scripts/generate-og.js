@@ -51,6 +51,13 @@ const VARIANTS = [
     sub: "A REPLY WITHIN ONE BUSINESS DAY. NO SALES PITCH.",
     footer: "velquortech.com/contact",
   },
+  {
+    file: "og-process.png",
+    kicker: "HOW WE WORK",
+    tagline: "FIVE STEPS. NO SURPRISES.",
+    sub: "WORKING SOFTWARE EVERY TWO WEEKS. NOTHING HIDDEN.",
+    footer: "velquortech.com/process",
+  },
 ];
 
 // Lockup geometry — mark left, wordmark to its right.
