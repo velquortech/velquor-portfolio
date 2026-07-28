@@ -7,7 +7,7 @@ import { BookingEmbed } from "../components/booking/BookingEmbed";
 import { StepField } from "../components/brand/StepField";
 
 const DESCRIPTION =
-  "Book a one-hour intro call with Velquor. No sales pitch, no commitment — bring a rough idea, a spec, or a system that needs a second pair of eyes.";
+  "Book a 30-minute intro call with Velquor. No sales pitch, no commitment — bring a rough idea, a spec, or a system that needs a second pair of eyes.";
 
 export const metadata: Metadata = {
   title: "Book a call",
@@ -93,7 +93,7 @@ export default function BookPage() {
           {/* Header */}
           <header className="relative max-w-[760px] mb-14">
             <p className="text-[12px] font-medium tracking-[0.10em] text-muted uppercase mb-4">
-              Intro call — one hour
+              Intro call — 30 minutes
             </p>
             <h1 className="text-display-xl font-display font-bold uppercase tracking-display-xl leading-display-section text-ink mb-6">
               Pick a time
@@ -101,7 +101,7 @@ export default function BookPage() {
               that works.
             </h1>
             <p className="text-[clamp(16px,2vw,20px)] leading-[1.5] tracking-[-0.2px] text-muted">
-              A full hour with the people who would build it — not a sales
+              Thirty minutes with the people who would build it — not a sales
               team. Bring a rough idea, a written spec, or an existing system
               that needs a second pair of eyes.
             </p>
@@ -115,8 +115,8 @@ export default function BookPage() {
 
             <aside className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
               <DetailCard Icon={Clock} label="How long">
-                <span className="text-violet-300">One hour</span>, and we keep
-                to it. Times are shown in your own timezone.
+                <span className="text-violet-300">Thirty minutes</span>, and we
+                keep to it. Times are shown in your own timezone.
               </DetailCard>
 
               <DetailCard Icon={Video} label="Where">

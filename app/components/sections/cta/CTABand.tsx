@@ -79,7 +79,7 @@ export function CTABand({ sourcePage = "/", interestedIn }: Props) {
                 href="/book"
                 className="inline-block bg-white/10 text-ink border border-white/15 hover:bg-white/15 transition-colors duration-200 px-[22px] py-[11px] rounded-pill text-[13px] font-medium tracking-[-0.13px] no-underline"
               >
-                Book a one-hour call
+                Book a 30-minute call
               </Link>
 
               {/* The mailto survives, for people who prefer their own mail
