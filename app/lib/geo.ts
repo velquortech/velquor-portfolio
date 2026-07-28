@@ -10,6 +10,15 @@
 /** Written by proxy.ts, read in the browser. Not a secret, not HttpOnly. */
 export const COUNTRY_COOKIE = "vq_country";
 
+/**
+ * The visitor's own choice, which beats every detection signal.
+ *
+ * Kept separate from COUNTRY_COOKIE on purpose: the proxy rewrites that one
+ * whenever the edge reports a different country, so an override stored there
+ * would be wiped on the next navigation.
+ */
+export const CURRENCY_COOKIE = "vq_currency";
+
 /** ISO 3166-1 alpha-2 for the Philippines. */
 export const PH = "PH";
 
@@ -18,4 +27,28 @@ export function readCookie(name: string): string | null {
   if (typeof document === "undefined") return null;
   const match = document.cookie.match(`(?:^|; )${name}=([^;]*)`);
   return match ? decodeURIComponent(match[1]) : null;
+}
+
+/** Browser-only, thirty days, same scope as the country cookie. */
+export function writeCookie(name: string, value: string): void {
+  if (typeof document === "undefined") return;
+  document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=${
+    60 * 60 * 24 * 30
+  }; samesite=lax`;
+}
+
+/**
+ * Does the browser's language list look Philippine?
+ *
+ * A useful second signal because plenty of machines in the Philippines are set
+ * to the Singapore timezone — same UTC+8, and it is what a lot of Windows
+ * installs offer first. Locale is set from a different menu and tends to stay
+ * honest.
+ */
+export function localeLooksPhilippine(): boolean {
+  if (typeof navigator === "undefined") return false;
+  const langs = navigator.languages?.length
+    ? navigator.languages
+    : [navigator.language];
+  return langs.some((l) => /^(fil|tl)\b/i.test(l) || /-PH$/i.test(l));
 }
