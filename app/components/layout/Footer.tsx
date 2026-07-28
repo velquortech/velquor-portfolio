@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Facebook, Instagram, Linkedin } from "lucide-react";
+import { SOLUTIONS } from "../../data/solutions";
 
 const SOCIALS = [
   {
@@ -21,15 +22,13 @@ const SOCIALS = [
 
 const COLS = [
   {
-    title: "Services",
-    links: [
-      { label: "Custom Software", href: "#services" },
-      { label: "Web Platforms", href: "#services" },
-      { label: "Mobile Apps", href: "#services" },
-      { label: "API Architecture", href: "#services" },
-      { label: "Cloud & DevOps", href: "#services" },
-      { label: "UI/UX Engineering", href: "#services" },
-    ],
+    title: "Solutions",
+    // Built from the data rather than typed out again: these were six copies of
+    // `#services`, which resolved against whatever page you happened to be on.
+    links: SOLUTIONS.map((s) => ({
+      label: s.name,
+      href: `/solutions#${s.slug}`,
+    })),
   },
   {
     title: "Company",

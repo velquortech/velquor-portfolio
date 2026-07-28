@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type Spotlight = {
   kind: "spotlight";
   bgClass: string;
@@ -75,7 +77,7 @@ function Arrow() {
 
 export function Services() {
   return (
-    <section id="services" className="relative py-24 overflow-hidden">
+    <section id="solutions" className="relative py-24 overflow-hidden">
       {/* Section atmosphere */}
       <div
         aria-hidden
@@ -85,8 +87,10 @@ export function Services() {
       <div className="relative mx-auto px-6 max-w-[1200px]">
         {/* Section header */}
         <div className="mb-14">
+          {/* Matches the nav, the footer column, and /solutions. The site used
+              to say "Services" here and "Solutions" everywhere else. */}
           <p className="text-[12px] font-medium tracking-[0.10em] text-muted uppercase mb-3">
-            What we do
+            Solutions
           </p>
           <h2 className="text-display-xl font-display font-bold uppercase tracking-display-xl leading-display-section text-ink max-w-[600px]">
             Every layer, <span className="text-gradient-palette">handled.</span>
@@ -155,6 +159,19 @@ export function Services() {
               </div>
             ),
           )}
+        </div>
+
+        {/* The detail — what each one includes, the stack, and the case studies
+            that used it — lives on /solutions. Same arrangement the Process
+            section uses. */}
+        <div className="mt-10">
+          <Link
+            href="/solutions"
+            className="inline-flex items-center gap-2 bg-s1 border border-hairline-strong hover:border-hairline-hover transition-colors duration-200 text-ink px-[22px] py-[11px] rounded-pill text-[14px] font-medium tracking-[-0.14px] no-underline"
+          >
+            See all solutions
+            <span aria-hidden>→</span>
+          </Link>
         </div>
       </div>
     </section>

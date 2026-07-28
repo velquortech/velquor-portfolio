@@ -58,6 +58,13 @@ const VARIANTS = [
     sub: "WORKING SOFTWARE EVERY TWO WEEKS. NOTHING HIDDEN.",
     footer: "velquortech.com/process",
   },
+  {
+    file: "og-solutions.png",
+    kicker: "WHAT WE TAKE ON",
+    tagline: "SIX THINGS, DONE PROPERLY.",
+    sub: "SHIPPED WORK ONLY. CASE STUDIES FOR EVERY ONE.",
+    footer: "velquortech.com/solutions",
+  },
 ];
 
 // Lockup geometry — mark left, wordmark to its right.
