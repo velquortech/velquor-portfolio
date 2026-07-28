@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { StepField } from "../../brand/StepField";
 import { ContactForm } from "../../contact/ContactForm";
 
@@ -68,16 +69,28 @@ export function CTABand({ sourcePage = "/", interestedIn }: Props) {
               commitment required.
             </p>
 
-            {/* One mailto survives, as a secondary route for people who prefer
-                their own mail client. It is no longer the only route.
+            {/* Two secondary routes, both deliberately ghost pills rather than
+                the white inversion: the form's violet submit is the primary
+                action in this band, and a white pill here would outrank it.
                 White-on-violet per the inversion rule — this band's ground is
                 already violet (bg-spotlight-cta). */}
-            <a
-              href="mailto:velquortechnologies@gmail.com"
-              className="inline-block max-w-full break-all bg-white/10 text-ink border border-white/15 hover:bg-white/15 transition-colors duration-200 px-[22px] py-[11px] rounded-pill text-[13px] font-medium tracking-[-0.13px] no-underline"
-            >
-              Or email velquortechnologies@gmail.com
-            </a>
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                href="/book"
+                className="inline-block bg-white/10 text-ink border border-white/15 hover:bg-white/15 transition-colors duration-200 px-[22px] py-[11px] rounded-pill text-[13px] font-medium tracking-[-0.13px] no-underline"
+              >
+                Book a 30-minute call
+              </Link>
+
+              {/* The mailto survives, for people who prefer their own mail
+                  client. It is no longer the only route. */}
+              <a
+                href="mailto:velquortechnologies@gmail.com"
+                className="inline-block max-w-full break-all bg-white/10 text-ink border border-white/15 hover:bg-white/15 transition-colors duration-200 px-[22px] py-[11px] rounded-pill text-[13px] font-medium tracking-[-0.13px] no-underline"
+              >
+                Or email velquortechnologies@gmail.com
+              </a>
+            </div>
           </div>
 
           <ContactForm sourcePage={sourcePage} interestedIn={interestedIn} />

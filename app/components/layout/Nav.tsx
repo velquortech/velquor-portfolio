@@ -11,6 +11,10 @@ const LINKS = [
   // The real page, not the in-page band — the band is a section, /contact is
   // an address you can put in an ad or a signature.
   { label: "Contact",  href: "/contact"   },
+  // Text link, not the CTA slot. The pill stays on /contact: that path writes
+  // to Airtable and works with JS off, while booking depends on a third-party
+  // widget and on the Calendly account's timezone being right.
+  { label: "Book a call", href: "/book"   },
 ];
 
 function HamburgerIcon() {
