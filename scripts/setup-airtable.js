@@ -68,7 +68,16 @@ const FIELDS = [
   },
   {
     name: "Status",
-    ...select(["New", "Contacted", "Qualified", "Won", "Lost"]),
+    ...select([
+      "New",
+      // Quarantine lane: written, but it did not clear Turnstile. Filter it out
+      // of the default view — a visitor with JavaScript off lands here too.
+      "Unverified",
+      "Contacted",
+      "Qualified",
+      "Won",
+      "Lost",
+    ]),
   },
 ];
 
