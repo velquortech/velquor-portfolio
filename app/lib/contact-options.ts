@@ -110,10 +110,33 @@ export const LIMITS = {
   message: 4000,
   sourcePage: 300,
   interestedIn: 200,
+  /** Not user-authored, but read out of the same FormData, so bounded alongside
+      the rest. Turnstile tokens run to a couple of kilobytes. */
+  turnstile: 4000,
 } as const;
 
 /** The honeypot input's name. Bots fill it; humans never see it. */
 export const HONEYPOT = "website";
+
+/**
+ * The hidden input Cloudflare's script injects into the enclosing form.
+ *
+ * Shared for the same reason every list above is: the widget declares it, the
+ * Server Action reads it, and a typo on one side would fail silently as an
+ * absent token — which the action treats as an unverified human, not an error.
+ */
+export const TURNSTILE_FIELD = "cf-turnstile-response";
+
+/**
+ * Airtable `Status` choices, mirrored from the Leads table like every other
+ * select here.
+ *
+ * `Unverified` is the quarantine lane: the lead is written, but it did not
+ * clear Turnstile. Filter it out of the default view rather than deleting it —
+ * a visitor with JavaScript off lands here too.
+ */
+export const STATUS_NEW = "New";
+export const STATUS_UNVERIFIED = "Unverified";
 
 export type ContactState = {
   ok: boolean;

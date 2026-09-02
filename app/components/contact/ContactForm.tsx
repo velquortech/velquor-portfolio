@@ -22,6 +22,20 @@ import {
   writeCookie,
 } from "../../lib/geo";
 import { StepField } from "../brand/StepField";
+import { Turnstile } from "./Turnstile";
+
+/**
+ * Public half of the Turnstile key pair — safe in the client bundle, which is
+ * the point of it being NEXT_PUBLIC_. The secret lives server-side only, in
+ * app/lib/turnstile.ts.
+ *
+ * Absent in local dev unless you set it. No key means no widget, which the
+ * Server Action reads as an unverified submission and files accordingly.
+ */
+// The NEXT_PUBLIC_ prefix is load-bearing, not decoration: Next only inlines
+// prefixed vars into the browser bundle. Without it this reads undefined in
+// the client, the guard below is always false, and the widget never mounts.
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 /**
  * Which currency to *show* the budget bands in. The posted value never changes.
@@ -39,7 +53,7 @@ import { StepField } from "../brand/StepField";
  * With JavaScript off the form still works and shows dollars.
  */
 /** None of these signals change mid-session — nothing to subscribe to. */
-const subscribe = () => () => {};
+const subscribe = () => () => { };
 
 /**
  * In precedence order:
@@ -212,11 +226,10 @@ export function ContactForm({
               type="button"
               onClick={() => chooseCurrency(c)}
               aria-pressed={currency === c}
-              className={`px-2.5 py-1 rounded-pill border text-[11px] font-semibold tracking-[0.08em] cursor-pointer transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300 ${
-                currency === c
+              className={`px-2.5 py-1 rounded-pill border text-[11px] font-semibold tracking-[0.08em] cursor-pointer transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300 ${currency === c
                   ? "bg-s2 border-hairline-strong text-ink"
                   : "bg-transparent border-transparent text-white/40 hover:text-white/70"
-              }`}
+                }`}
             >
               {c}
             </button>
@@ -413,6 +426,13 @@ export function ContactForm({
       >
         {state.message}
       </p>
+
+      {/* Bot check. Draws nothing unless Cloudflare actually wants a
+          challenge, and its token arrives as a real hidden input — so this
+          stays a plain form POST and the no-JS path is unaffected. */}
+      {TURNSTILE_SITE_KEY ? (
+        <Turnstile siteKey={TURNSTILE_SITE_KEY} resetOn={state} />
+      ) : null}
 
       <div className="flex items-center gap-4 flex-wrap">
         {/* A violet pill, not the white inversion: this button sits on the

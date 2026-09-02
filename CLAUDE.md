@@ -108,7 +108,7 @@ All custom utilities live in `app/globals.css` under `@layer utilities`.
 
 Every CTA on the site funnels into one Server Action that writes a row to Airtable. Before this existed the buttons were `mailto:` links, which silently did nothing on mobile and left no record — do not reintroduce a `mailto:`-only path as the sole contact route.
 
-**The path:** `ContactForm` → `submitContact` (Server Action) → `createLead` → Airtable REST.
+**The path:** `ContactForm` → `submitContact` (Server Action) → `verifyTurnstile` → `createLead` → Airtable REST.
 
 | File | Role |
 | --- | --- |
@@ -116,6 +116,8 @@ Every CTA on the site funnels into one Server Action that writes a row to Airtab
 | `app/lib/contact-options.ts` | Select choices, length caps, the honeypot name, and the action's state type |
 | `app/actions/contact.ts` | `"use server"`, `(prevState, formData)` per `useActionState` |
 | `app/components/contact/ContactForm.tsx` | Client Component. Props: `sourcePage`, `interestedIn?`, `defaultSegment?` |
+| `app/lib/turnstile.ts` | Server-only siteverify wrapper. Returns a five-way verdict, not a boolean |
+| `app/components/contact/Turnstile.tsx` | Client widget. Implicit render, so the token arrives as a real hidden input |
 
 **Placements** — `CTABand` (homepage, `/work`, and every project page) and the `/contact` page. `CTABand` takes `sourcePage` and `interestedIn`; project pages pass the case-study name so warm leads arrive tagged. `/contact` does **not** render `CTABand` — the band *is* the form, so it would appear twice.
 
@@ -131,7 +133,23 @@ Every CTA on the site funnels into one Server Action that writes a row to Airtab
 - The form must keep working with JavaScript disabled. It is a real `<form action={formAction}>` and context travels as hidden inputs — do not convert it to an `onSubmit` handler.
 - The honeypot (`website`) returns the *success* shape, not an error. A bot that learns it was caught adapts.
 
-**Runtime env** — `AIRTABLE_TOKEN`, `AIRTABLE_BASE_ID`, `AIRTABLE_TABLE`. Documented in `.env.example`; `.env*` is gitignored. `scripts/setup-airtable.js` provisions the `Leads` schema idempotently and prints the ids.
+### Bot mitigation
+
+The form was flooded with junk leads from freshly-registered Gmail throwaways (`alexasaycxi1107@gmail.com` and friends). The honeypot alone did not stop it. What shipped:
+
+- **Cloudflare Turnstile**, verified server-side in the action before the Airtable write. Managed mode, `interaction-only` appearance, so it draws nothing unless Cloudflare wants a challenge.
+- **Implicit rendering, not explicit.** Cloudflare's script injects the token as a real hidden input into the enclosing form. That is what lets `ContactForm` stay a plain `<form action={formAction}>` with no `onSubmit` — do not convert it to explicit rendering, and do not marshal the token by hand.
+- **An absent token is not an error.** With JavaScript off there is no widget and no token, and the form is specified to keep working. So a tokenless submission is written and quarantined as `Status: "Unverified"` rather than rejected. Same for a missing `TURNSTILE_SECRET_KEY` and for a Cloudflare outage — a real lead is never dropped because our own defence was unavailable. This is why `verifyTurnstile` returns a verdict union and not a boolean: `missing`, `unconfigured` and `unavailable` must not collapse into either `true` (silent bypass) or `false` (lost leads).
+- **The `NEXT_PUBLIC_` prefix on the site key is load-bearing, not cosmetic.** Next only inlines prefixed vars into the browser bundle, so `process.env.TURNSTILE_SITE_KEY` in `ContactForm` reads `undefined` in the client, the render guard is always false, and the widget silently never mounts — every visitor then files as `Unverified` and lands in the tightest rate-limit tier. This shipped broken once. To check a build: `grep -rl "<your site key>" .next/static`.
+- **`TURNSTILE_REQUIRE=1` is the emergency lever**, off by default. It flips the unverified lane from written-and-quarantined to silently dropped, trading the no-JS visitor away to stop rows being created during an active flood. Unset it afterwards.
+- **Field validation runs before verification.** Verification spends the token, so validating first leaves a visitor fixing a typo with a live one — and a bot posting junk never costs a siteverify call.
+- **`timeout-or-duplicate` is a human, not a bot.** A token dies five minutes after issue, so a slow form-filler hits it honestly. That verdict asks them to resend, and `Turnstile` reissues a token off the identity of the action's result (`resetOn`) — an effect syncing an external widget, deliberately not an attempt counter in state, which `react-hooks/set-state-in-effect` rejects. It never quarantines.
+- **Do not add an email-existence check.** It has been asked for twice. Google publishes no API that says whether a Gmail address is registered, and SMTP `RCPT TO` probing gmail.com accepts everything while getting the probing IP blocked. MX lookups, disposable-domain lists and `+tag`/dot normalisation are all no-ops against a `@gmail.com` throwaway. Volume controls are the lever; a paid validator (ZeroBounce, Kickbox) is the only thing that can answer the mailbox question, and it must sit *behind* a rate limit or a flood runs up the bill.
+- **The client IP must not be read from `x-forwarded-for` first.** That header is a list proxies append to, and its leftmost entry is the conventional slot for a caller-supplied value. `clientIp` prefers `x-vercel-forwarded-for`, then `x-real-ip`, and falls back to XFF last. It only feeds siteverify's scoring today, but the ordering becomes load-bearing the moment anything keys a quota off it.
+- **There is deliberately no application-level rate limit.** An Upstash Redis limiter (per-IP, per-email, verified/unverified tiers, global ceilings) was built and then removed — the dependency was not wanted for the traffic this site sees. Consequence to keep in mind: on its own, Turnstile *labels* a direct-POST flood as `Unverified` but does not stop the rows being written. It was never committed, so there is nothing to revert to — rebuilding means rebuilding. The three traps worth knowing up front: `SET … EX … NX` before `INCR` (an unconditional `EXPIRE` pushes the window forward on every request, so a key under sustained load never resets), a global ceiling must not be incremented by callers already blocked by a per-caller quota (or one attacker locks out every visitor), and a single global ceiling should be split by verification verdict (or a distributed flood takes real visitors down with it).
+- **The ceiling is a Vercel Firewall rule, not code.** Project Settings → Firewall, rate limit on the action POST. It is the only layer that stops a request before a function is invoked — everything in this repo runs *after* the invocation, so a flood still costs compute either way.
+
+**Runtime env** — `AIRTABLE_TOKEN`, `AIRTABLE_BASE_ID`, `AIRTABLE_TABLE`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`, optional `TURNSTILE_REQUIRE`. Documented in `.env.example`; `.env*` is gitignored. `scripts/setup-airtable.js` provisions the `Leads` schema idempotently and prints the ids — note it only adds *missing fields*, so a new select choice on an existing field still has to be added in the Airtable UI.
 
 **Brand note** — the submit button is a violet pill even inside `CTABand`. The white-pill inversion applies to elements sitting *on* the violet ground; this button sits on the form's `s1` card. The band's secondary `mailto:` link, which is on the violet ground, does invert.
 
@@ -164,6 +182,7 @@ Icons come from the `app/` file conventions — do **not** also declare `metadat
 - Don't add a hue-named utility (`glow-magenta`, `bg-corner-orange`, …). Those names existed and were deleted.
 - Don't ship the placeholder phone number.
 - Don't prefix any Airtable variable with `NEXT_PUBLIC_`, and don't add a select choice on one side of `contact-options.ts` / the Airtable table without the other.
+- Don't prefix `TURNSTILE_SECRET_KEY` with `NEXT_PUBLIC_` either. The *site* key is public by design; the secret is the whole check.
 
 ## Known gaps
 
